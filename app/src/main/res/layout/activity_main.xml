@@ -5,10 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/cornflower_blue_65"
     tools:context="com.hoschtettler.jacques.moodtracker.MainActivity">
 
+    <view
+        android:id="@+id/Mood_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="@color/cornflower_blue_65"/>
+
     <ImageView
+        android:id="@+id/Mood_icon"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
