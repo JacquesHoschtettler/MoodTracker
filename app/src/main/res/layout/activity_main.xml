@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hoschtettler.jacques.moodtracker.MainActivity">
+    tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity">
 
     <view
         android:id="@+id/Mood_background"
@@ -23,7 +23,6 @@
         android:src="@mipmap/smiley_normal"
          />
 
-
     <ImageButton
         android:id="@+id/Add_comment"
         android:background="cornflower_blue_65"
@@ -32,7 +31,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:src="@mipmap/ic_note_add_black" />
 
     <ImageButton
