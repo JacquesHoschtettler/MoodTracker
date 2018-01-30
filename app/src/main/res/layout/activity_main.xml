@@ -31,10 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/Show_mood_week"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="20dp"
-        android:src="@mipmap/ic_comment_black_48px" />
+        android:src="@mipmap/ic_note_add_black" />
 
     <ImageButton
         android:id="@+id/Show_mood_week"
