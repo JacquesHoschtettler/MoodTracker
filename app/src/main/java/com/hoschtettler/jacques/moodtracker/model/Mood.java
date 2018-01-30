@@ -15,42 +15,65 @@ public class Mood
 {
     private String mIcon ;      //  the reference to the icon of the mood
     private String mColor ;     //  the reference to the color of the mood
+    private String mComment ;   //  the eventual comment
 
     /**
      * Default constructor
-     * By default the mood is the normal mood.
+     * By default the mood is the normal mood, without comment.
      */
     public Mood()
     {
         this.mIcon ="smiley_normal" ;
         this.mColor = "cornflower_blue_65" ;
+        this.mComment ="" ;
     }
 
     /**
      * General constructor
-     * @param
-     *          icon
-     *          color
+     * @param icon
+     * @param color
      */
     public Mood(String icon, String color)
     {
         this.mIcon = icon ;
         this.mColor = color ;
+        this.mComment = "" ;
     }
 
-    public String getmIcon() {
+    /**
+     * Alternative constructor with a not empty comment
+     * @param icon
+     * @param color
+     * @param comment
+     */
+    public Mood(String icon, String color, String comment)
+    {
+        this.mIcon = icon ;
+        this.mColor = color ;
+        this.mComment = comment ;
+    }
+
+    public String getIcon() {
         return mIcon;
     }
 
-    public void setmIcon(String mIcon) {
-        this.mIcon = mIcon;
+    public void setIcon(String icon) {
+        mIcon = icon;
     }
 
-    public String getmColor() {
+    public String getColor() {
         return mColor;
     }
 
-    public void setmColor(String mColor) {
-        this.mColor = mColor;
+    public void setColor(String color) {
+        mColor = color;
+    }
+
+    public String getComment() {
+        return mComment;
+    }
+
+    public void setComment(String comment) {
+        mComment = comment;
     }
 }

@@ -3,6 +3,7 @@ package com.hoschtettler.jacques.moodtracker.Controller;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.hoschtettler.jacques.moodtracker.R;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private View mMoodBackground ;      // current color of the mood
     private ImageView mMoodIcom ;       // current icon of the mood
     private Mood mCurrentMood;          // current mood to display and to memorize
+
+    private ImageButton mAdd_Comment ;  // access to writing a comment
 
     /**
      * Initalization of the display and of the Mood
