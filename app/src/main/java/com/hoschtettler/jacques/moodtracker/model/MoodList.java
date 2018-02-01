@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Created by
  * @author jacques
  * on 30/01/18.
+ * @version 1
  * Part of the MoodTracker's model.
  * Define the list of the moods, the mood with index 0 is the sadest one, the mood with index 4
  * is the happiest one.
@@ -40,7 +41,7 @@ public class MoodList extends Mood
      *          3 for "smiley_happy" ;
      *          4 for "smiley_super_happy".
      * @return mood
-     *          the mool correlating with the index (see upper)
+     *          the mood correlating with the index (see upper)
      */
     public Mood getMoods(int index)
     {

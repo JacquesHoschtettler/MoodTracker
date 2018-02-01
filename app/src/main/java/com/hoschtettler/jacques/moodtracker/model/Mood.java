@@ -4,11 +4,13 @@ package com.hoschtettler.jacques.moodtracker.model;
  *
  * @author jacques
  * on 30/01/18.
+ * @version 1
  * Part of the MoodTracker's model.
  * Create the frame of a mood.
  * A mood is defined by :
  *          its icon : a String ;
  *          its color : a String.
+ *          its comment : a String
  */
 
 public class Mood
