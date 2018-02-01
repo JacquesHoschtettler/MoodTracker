@@ -1,10 +1,17 @@
 package com.hoschtettler.jacques.moodtracker.model;
 
+import android.support.annotation.NonNull;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  *
  * @author jacques
  * on 30/01/18.
- * @version 1
+ * @version 2
  * Part of the MoodTracker's model.
  * Create the frame of a mood.
  * A mood is defined by :
@@ -13,8 +20,9 @@ package com.hoschtettler.jacques.moodtracker.model;
  *          its comment : a String
  */
 
-public class Mood
+public class Mood implements Set
 {
+    private Set<String> mMood = new LinkedHashSet<String> ;  // The three strings are in a set
     private String mIcon ;      //  the reference to the icon of the mood
     private String mColor ;     //  the reference to the color of the mood
     private String mComment ;   //  the eventual comment
@@ -25,9 +33,9 @@ public class Mood
      */
     public Mood()
     {
-        this.mIcon ="smiley_normal" ;
-        this.mColor = "cornflower_blue_65" ;
-        this.mComment ="" ;
+        this.mMood.add("smiley_normal") ;
+        this.mMood.add("cornflower_blue_65") ;
+        this.mMood.add("") ;
     }
 
     /**
@@ -37,9 +45,9 @@ public class Mood
      */
     public Mood(String icon, String color)
     {
-        this.mIcon = icon ;
-        this.mColor = color ;
-        this.mComment = "" ;
+        this.mMood.add(icon) ;
+        this.mMood.add(color) ;
+        this.mMood.add("") ;
     }
 
     /**
@@ -50,32 +58,53 @@ public class Mood
      */
     public Mood(String icon, String color, String comment)
     {
-        this.mIcon = icon ;
-        this.mColor = color ;
-        this.mComment = comment ;
+        this.mMood.add(icon) ;
+        this.mMood.add(color) ;
+        this.mMood.add(comment) ;
     }
 
-    public String getIcon() {
-        return mIcon;
+    public String getIcon()
+    {
+        return (String)mMood.toArray()[0] ;
     }
 
-    public void setIcon(String icon) {
-        mIcon = icon;
+    public void setIcon(String icon)
+    {
+        String[] tempMood = (String[]) mMood.toArray() ;
+        tempMood[0] = icon ;
+        addToMood(tempMood);
     }
 
-    public String getColor() {
-        return mColor;
+    public String getColor()
+    {
+        return (String)mMood.toArray()[1];
     }
 
-    public void setColor(String color) {
-        mColor = color;
+    public void setColor(String color)
+    {
+        String[] tempMood = (String[]) mMood.toArray() ;
+        tempMood[1] = color ;
+        addToMood(tempMood);
     }
 
-    public String getComment() {
-        return mComment;
+    public String getComment()
+    {
+        return(String)mMood.toArray()[3];
     }
 
-    public void setComment(String comment) {
-        mComment = comment;
+    public void setComment(String comment)
+    {
+        String[] tempMood = (String[]) mMood.toArray() ;
+        tempMood[2] = comment ;
+        addToMood(tempMood); ;
     }
+
+    private void addToMood(String[] tempMood)
+    {
+        this.mMood.clear() ;
+        this.mMood.add(tempMood[0]) ;
+        this.mMood.add(tempMood[1]) ;
+        this.mMood.add(tempMood[2]) ;
+    }
+
 }
