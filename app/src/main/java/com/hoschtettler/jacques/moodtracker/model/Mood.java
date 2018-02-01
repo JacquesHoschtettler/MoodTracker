@@ -1,9 +1,5 @@
 package com.hoschtettler.jacques.moodtracker.model;
 
-import android.support.annotation.NonNull;
-
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,18 +10,16 @@ import java.util.Set;
  * @version 2
  * Part of the MoodTracker's model.
  * Create the frame of a mood.
- * A mood is defined by :
+ * A mood is defined by, in this order :
  *          its icon : a String ;
  *          its color : a String.
  *          its comment : a String
  */
 
-public class Mood implements Set
+public class Mood
 {
-    private Set<String> mMood = new LinkedHashSet<String> ;  // The three strings are in a set
-    private String mIcon ;      //  the reference to the icon of the mood
-    private String mColor ;     //  the reference to the color of the mood
-    private String mComment ;   //  the eventual comment
+    /*  The three strings are in a linked set */
+    private Set<String> mMood = new LinkedHashSet<>() ;
 
     /**
      * Default constructor
@@ -63,11 +57,18 @@ public class Mood implements Set
         this.mMood.add(comment) ;
     }
 
+    /**
+     *  Returns the name of the icon
+     */
     public String getIcon()
     {
         return (String)mMood.toArray()[0] ;
     }
 
+    /**
+     * Put a new name of icon
+     * @param icon
+     */
     public void setIcon(String icon)
     {
         String[] tempMood = (String[]) mMood.toArray() ;
@@ -75,11 +76,18 @@ public class Mood implements Set
         addToMood(tempMood);
     }
 
+    /**
+     * Returns the name of the color
+     */
     public String getColor()
     {
         return (String)mMood.toArray()[1];
     }
 
+    /**
+     * Put a new name of the color
+     * @param color
+     */
     public void setColor(String color)
     {
         String[] tempMood = (String[]) mMood.toArray() ;
@@ -87,11 +95,18 @@ public class Mood implements Set
         addToMood(tempMood);
     }
 
+    /**
+     *  Return the comment
+     */
     public String getComment()
     {
         return(String)mMood.toArray()[3];
     }
 
+    /**
+     * Put a new comment
+     * @param comment
+     */
     public void setComment(String comment)
     {
         String[] tempMood = (String[]) mMood.toArray() ;
@@ -99,6 +114,10 @@ public class Mood implements Set
         addToMood(tempMood); ;
     }
 
+    /**
+     * Private method to rebuild the linked chain of the set
+     * Used by setIcon, setColor and set Comment
+     */
     private void addToMood(String[] tempMood)
     {
         this.mMood.clear() ;
