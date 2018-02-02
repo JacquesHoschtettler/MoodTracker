@@ -1,5 +1,4 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
@@ -9,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.hoschtettler.jacques.moodtracker.R;
-import com.hoschtettler.jacques.moodtracker.model.Mood;
+import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
 import java.util.Calendar;
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar mCurrentDate ;         //  current date memorized
 
     // Memory space to memorize the moods of the week and the current date.
-    private MultiSelectListPreference mMoodsMemorized = getPreferences(MODE_PRIVATE) ;
+    private SharedPreferences mMoodsMemorized = getPreferences(MODE_PRIVATE) ;
     public static final String PREFERENCES_KEY_MOODS = "PREFERENCES_KEY_MOODS" ;
     public static final String PREFERENCES_KEY_DATE = "PREFERENCES_KEY_DATE" ;
 
