@@ -1,7 +1,6 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.MultiSelectListPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -36,13 +36,9 @@ public class MainActivity extends AppCompatActivity {
      *      - index 2 for the mood of the day before yesterday ;
      *      - ...
      */
-    private Mood[] mWeekMood = new Mood[8];
+    private ArrayList<Mood> mWeekMood = new ArrayList<>();
     private Calendar mCurrentDate ;         //  current date memorized
 
-    // Memory space to memorize the moods of the week and the current date.
-    private SharedPreferences mMoodsMemorized = getPreferences(MODE_PRIVATE) ;
-    public static final String PREFERENCES_KEY_MOODS = "PREFERENCES_KEY_MOODS" ;
-    public static final String PREFERENCES_KEY_DATE = "PREFERENCES_KEY_DATE" ;
 
     /**
      * Initalization of the display and of the Mood
@@ -64,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
          * Else the current mood is the mood memorized with the index 0
          */
         // recovery of the current date memorized
-        mCurrentDate.get(mMoodsMemorized.getInt(PREFERENCES_KEY_DATE,0)) ;
         if (mCurrentDate != Calendar.getInstance() )
         {
             oneMoreDay();
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     {
         for (int i = 7; i >0 ; --i)
         {
-            mWeekMood[i] = mWeekMood[i-1] ;
+            mWeekMood.add(i,mWeekMood.get(i-1))  ;
         }
     }
 }
