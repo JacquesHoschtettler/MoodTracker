@@ -1,11 +1,14 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
@@ -23,7 +26,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private View mMoodBackground ;      // current color of the mood.
-    private ImageView mMoodIcom ;       // current icon of the mood.
+    private ImageView mMoodIcon ;       // current icon of the mood.
     private Mood mCurrentMood;          // current mood to display and to memorize.
 
     private ImageButton mAdd_Comment ;  // access to writing a comment.
@@ -37,19 +40,20 @@ public class MainActivity extends AppCompatActivity {
      *      - ...
      */
     private ArrayList<Mood> mWeekMood = new ArrayList<>();
-    private Calendar mCurrentDate ;         //  current date memorized
+    private Memorisation mMemo;         //  memorization object
 
 
     /**
      * Initalization of the display and of the Mood
      * @param savedInstanceState
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         // Plugging the elements of the main screen
         mMoodBackground = (View) findViewById(R.id.Mood_background) ;
-        mMoodIcom = (ImageView) findViewById(R.id.Mood_icon) ;
+        mMoodIcon = (ImageView) findViewById(R.id.Mood_icon) ;
         mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment) ;
         mHistory = (ImageButton) findViewById(R.id.Show_mood_week) ;
 
@@ -59,29 +63,13 @@ public class MainActivity extends AppCompatActivity {
          * fifth become the sixth, etc.
          * Else the current mood is the mood memorized with the index 0
          */
-        // recovery of the current date memorized
-        if (mCurrentDate != Calendar.getInstance() )
-        {
-            oneMoreDay();
-            mCurrentMood = new Mood();
-        }
-        else
-        {
-
-        }
+        mMemo = new Memorisation() ;
+        Mood currentMood =  mMemo.initializationOfTheMood() ;
+        mMoodIcon.setImageResource("@mipmap/" + currentMood.getMoodIndex());
 
         super.onCreate(savedInstanceState) ;
         setContentView(R.layout.activity_main);
     }
 
-    /**
-     * Shift the moods of one day later
-     */
-    public void oneMoreDay()
-    {
-        for (int i = 7; i >0 ; --i)
-        {
-            mWeekMood.add(i,mWeekMood.get(i-1))  ;
-        }
-    }
+
 }
