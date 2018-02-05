@@ -1,5 +1,6 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
-import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.hoschtettler.jacques.moodtracker.Model.MoodList;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
@@ -24,11 +26,10 @@ import java.util.Calendar;
  */
 
 public class MainActivity extends AppCompatActivity {
+    private Mood mCurrentMood;          // current mood to display and to memorize.
 
     private View mMoodBackground ;      // current color of the mood.
     private ImageView mMoodIcon ;       // current icon of the mood.
-    private Mood mCurrentMood;          // current mood to display and to memorize.
-
     private ImageButton mAdd_Comment ;  // access to writing a comment.
     private ImageButton mHistory ;      // access to moods of the seven last days.
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ArrayList<Mood> mWeekMood = new ArrayList<>();
     private Memorisation mMemo;         //  memorization object
+    private MoodList mReferencedMoods ;
 
 
     /**
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mMoodIcon = (ImageView) findViewById(R.id.Mood_icon) ;
         mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment) ;
         mHistory = (ImageButton) findViewById(R.id.Show_mood_week) ;
+        mReferencedMoods = new MoodList() ;
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -65,7 +68,12 @@ public class MainActivity extends AppCompatActivity {
          */
         mMemo = new Memorisation() ;
         Mood currentMood =  mMemo.initializationOfTheMood() ;
-        mMoodIcon.setImageResource("@mipmap/" + currentMood.getMoodIndex());
+        Icon smiley = Icon.createWithFilePath("@mipmap/" +
+                mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex())) ;
+        mMoodIcon.setImageIcon(smiley);
+        Drawable background = Drawable.createFromPath("@color/"+
+                mReferencedMoods.getMoodColor(mCurrentMood.getMoodIndex())) ;
+        mMoodBackground.setForeground(background);
 
         super.onCreate(savedInstanceState) ;
         setContentView(R.layout.activity_main);

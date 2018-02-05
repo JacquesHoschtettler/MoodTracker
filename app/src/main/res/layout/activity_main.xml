@@ -19,7 +19,6 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="cornflower_blue_65"
         android:src="@mipmap/smiley_normal"
         />
 
