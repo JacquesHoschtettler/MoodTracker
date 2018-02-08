@@ -15,7 +15,6 @@ import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * @author jacques
@@ -25,8 +24,8 @@ import java.util.Calendar;
  * Initializes and displays the mood screen
  */
 
-public class MainActivity extends AppCompatActivity {
-    private Mood mCurrentMood;          // current mood to display and to memorize.
+public class MainActivity extends AppCompatActivity
+{
 
     private View mMoodBackground ;      // current color of the mood.
     private ImageView mMoodIcon ;       // current icon of the mood.
@@ -41,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
      *      - ...
      */
     private ArrayList<Mood> mWeekMood = new ArrayList<>();
-    private Memorisation mMemo;         //  memorization object
-    private MoodList mReferencedMoods ;
+    private Memorisation mMemo;             //  memorization object
+    private Mood mCurrentMood ;             // current mood to display and to memorize.
+    private MoodList mReferencedMoods ;     // List of the referenced moods
 
 
     /**
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
          * Else the current mood is the mood memorized with the index 0
          */
         mMemo = new Memorisation() ;
-        Mood currentMood =  mMemo.initializationOfTheMood() ;
+        mCurrentMood =  mMemo.initializationOfTheMood() ;
         Icon smiley = Icon.createWithFilePath("@mipmap/" +
                 mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex())) ;
         mMoodIcon.setImageIcon(smiley);
