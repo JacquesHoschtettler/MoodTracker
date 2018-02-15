@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         mHistory = (ImageButton) findViewById(R.id.Show_mood_week) ;
         mReferencedMoods = new MoodList() ;
 
+        System.out.println("Dans le onCreate") ;
+
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
          * the moods are shifted of a day (the sixth day become the seventh, the
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity
          */
         mMemo = new Memorisation() ;
         mCurrentMood =  mMemo.initializationOfTheMood() ;
+
+        System.out.println("Mood : " + mCurrentMood.getMoodIndex()) ;
+
         Icon smiley = Icon.createWithFilePath("@mipmap/" +
                 mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex())) ;
         mMoodIcon.setImageIcon(smiley);
