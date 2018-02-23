@@ -1,11 +1,7 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
-import android.os.Build;
+import android.annotation.TargetApi;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -23,12 +19,11 @@ import java.util.ArrayList;
  * Main part of the MoodTracker's controller
  * Initializes and displays the mood screen
  */
-
+// This app must be usable with the Kitkat level (Android 4.4)
+@TargetApi(19)              
 public class MainActivity extends AppCompatActivity
 {
-
-    private View mMoodBackground ;      // current color of the mood.
-    private ImageView mMoodIcon ;       // current icon of the mood.
+    private ImageView mSmiley ;         // current icon of the mood.
     private ImageButton mAdd_Comment ;  // access to writing a comment.
     private ImageButton mHistory ;      // access to moods of the seven last days.
 
@@ -49,18 +44,20 @@ public class MainActivity extends AppCompatActivity
      * Initalization of the display and of the Mood
      * @param savedInstanceState
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState) ;
+        setContentView(R.layout.activity_main);
+
         // Plugging the elements of the main screen
-        mMoodBackground = (View) findViewById(R.id.Mood_background) ;
+        mSmiley = (ImageView) findViewById(R.id.Mood_icon) ;
+        /* Version Java 8
         mMoodIcon = (ImageView) findViewById(R.id.Mood_icon) ;
+        */
         mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment) ;
         mHistory = (ImageButton) findViewById(R.id.Show_mood_week) ;
         mReferencedMoods = new MoodList() ;
-
-        System.out.println("Dans le onCreate") ;
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -71,18 +68,8 @@ public class MainActivity extends AppCompatActivity
         mMemo = new Memorisation() ;
         mCurrentMood =  mMemo.initializationOfTheMood() ;
 
-        System.out.println("Mood : " + mCurrentMood.getMoodIndex()) ;
-
-        Icon smiley = Icon.createWithFilePath("@mipmap/" +
-                mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex())) ;
-        mMoodIcon.setImageIcon(smiley);
-        Drawable background = Drawable.createFromPath("@color/"+
-                mReferencedMoods.getMoodColor(mCurrentMood.getMoodIndex())) ;
-        mMoodBackground.setForeground(background);
-
-        super.onCreate(savedInstanceState) ;
-        setContentView(R.layout.activity_main);
+        mSmiley.setImageResource(mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex()));
+        mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(mCurrentMood.getMoodIndex()));
     }
-
 
 }

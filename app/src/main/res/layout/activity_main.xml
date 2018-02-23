@@ -7,24 +7,20 @@
     android:orientation="vertical"
     tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity">
 
-    <view
-        android:id="@+id/Mood_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:foreground="@color/cornflower_blue_65"/>
 
     <ImageView
         android:id="@+id/Mood_icon"
+        android:background="@color/cornflower_blue_65"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:padding="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@mipmap/smiley_normal"
         />
 
     <ImageButton
         android:id="@+id/Add_comment"
-        android:background="@color/cornflower_blue_65"
+        android:background="x00000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -35,7 +31,7 @@
 
     <ImageButton
         android:id="@+id/Show_mood_week"
-        android:background="@color/cornflower_blue_65"
+        android:background="x00000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
