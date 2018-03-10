@@ -2,8 +2,14 @@ package com.hoschtettler.jacques.moodtracker.Controller;
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.hoschtettler.jacques.moodtracker.Model.MoodList;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
@@ -21,43 +27,59 @@ import java.util.ArrayList;
  */
 // This app must be usable with the Kitkat level (Android 4.4)
 @TargetApi(19)              
-public class MainActivity extends AppCompatActivity
-{
-    private ImageView mSmiley ;         // current icon of the mood.
-    private ImageButton mAdd_Comment ;  // access to writing a comment.
-    private ImageButton mHistory ;      // access to moods of the seven last days.
+public class MainActivity extends AppCompatActivity {
+    private ImageView mSmiley;         // current icon of the mood.
+    private ImageButton mAdd_Comment;  // access to writing a comment.
+    private ImageButton mHistory;      // access to moods of the seven last days.
+    private Button mValidateComment;   // valide the writed commment
+    private Button mEraseComment;      // erase the writed comment
+    private RelativeLayout mAdd_Comment_Set; // windows where the comment is writing
+    private EditText mComment;
 
     /**
      * Moods of the last seven days.
-     *      - index 0 is for the current day ;
-     *      - index 1 for the mood of yesterday ;
-     *      - index 2 for the mood of the day before yesterday ;
-     *      - ...
+     * - index 0 is for the current day ;
+     * - index 1 for the mood of yesterday ;
+     * - index 2 for the mood of the day before yesterday ;
+     * - ...
      */
     private ArrayList<Mood> mWeekMood = new ArrayList<>();
     private Memorisation mMemo;             //  memorization object
-    private Mood mCurrentMood ;             // current mood to display and to memorize.
-    private MoodList mReferencedMoods ;     // List of the referenced moods
+    private Mood mCurrentMood;             // current mood to display and to memorize.
+    private MoodList mReferencedMoods;     // List of the referenced moods
 
 
     /**
      * Initalization of the display and of the Mood
+     *
      * @param savedInstanceState
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState) ;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Plugging the elements of the main screen
-        mSmiley = (ImageView) findViewById(R.id.Mood_icon) ;
-        /* Version Java 8
-        mMoodIcon = (ImageView) findViewById(R.id.Mood_icon) ;
-        */
-        mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment) ;
-        mHistory = (ImageButton) findViewById(R.id.Show_mood_week) ;
-        mReferencedMoods = new MoodList() ;
+        mSmiley = (ImageView) findViewById(R.id.Mood_icon);
+        mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment);
+        mHistory = (ImageButton) findViewById(R.id.Show_mood_week);
+        mValidateComment = (Button) findViewById(R.id.Add_comment_validate_btn);
+        mEraseComment = (Button) findViewById(R.id.Add_comment_erase_btn);
+        mAdd_Comment_Set = (RelativeLayout) findViewById(R.id.Add_comment_set);
+        mComment = (EditText) findViewById(R.id.Add_comment_view);
+
+        // Set the interactives objects on listening position
+        mAdd_Comment.setOnClickListener((View.OnClickListener) this);
+        mAdd_Comment_Set.setOnClickListener((View.OnClickListener) this);
+        mValidateComment.setOnClickListener((View.OnClickListener) this);
+        mEraseComment.setOnClickListener((View.OnClickListener) this);
+
+        //Identifying the pressed button
+        mAdd_Comment.setTag(0);
+        mValidateComment.setTag(1);
+        mEraseComment.setTag(2);
+
+        mReferencedMoods = new MoodList();
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -65,11 +87,58 @@ public class MainActivity extends AppCompatActivity
          * fifth become the sixth, etc.
          * Else the current mood is the mood memorized with the index 0
          */
-        mMemo = new Memorisation() ;
-        mCurrentMood =  mMemo.initializationOfTheMood() ;
+        mMemo = new Memorisation();
+        mCurrentMood = mMemo.initializationOfTheMood();
 
-        mSmiley.setImageResource(mReferencedMoods.getMoodName(mCurrentMood.getMoodIndex()));
-        mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(mCurrentMood.getMoodIndex()));
+        int indexMood = mCurrentMood.getMoodIndex();
+        mSmiley.setImageResource(mReferencedMoods.getMoodName(indexMood));
+        mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(indexMood));
+
     }
 
+
+    public void OnClick(View v)
+    {
+        int buttonIndex = (int) v.getTag();
+        switch (buttonIndex)
+        {
+            case 0:
+                mAdd_Comment_Set.setVisibility(View.VISIBLE);
+                mComment.setEnabled(true);
+                String tempString = mCurrentMood.getMoodComment();
+                if (tempString != "") {
+                    mComment.setText(tempString);
+                }
+
+                mComment.addTextChangedListener(new TextWatcher() {
+                                                    @Override
+                                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                                    }
+
+                                                    @Override
+                                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                        mValidateComment.setEnabled(true);
+                                                        mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                                        mEraseComment.setEnabled(true);
+                                                        mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                                    }
+
+                                                    @Override
+                                                    public void afterTextChanged(Editable s) {
+                                                    }
+                                                }
+                );
+            break;
+            case 1 :
+                tempString = mComment.getText().toString();
+                mCurrentMood.setMoodComment(tempString);
+            break;
+            case 2 :
+                tempString = "" ;
+                mCurrentMood.setMoodComment(tempString);
+            break;
+        }
+
+
+    }
 }

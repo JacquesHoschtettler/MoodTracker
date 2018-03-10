@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity">
 
-
     <ImageView
         android:id="@+id/Mood_icon"
         android:background="@color/cornflower_blue_65"
@@ -16,22 +15,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/smiley_normal"
-        />
+    />
 
     <ImageButton
         android:id="@+id/Add_comment"
-        android:background="x00000000"
+        android:background="@color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
-        android:src="@mipmap/ic_note_add_black" />
+        android:src="@mipmap/ic_note_add_black"
+    />
 
     <ImageButton
         android:id="@+id/Show_mood_week"
-        android:background="x00000000"
+        android:background="@color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -39,6 +39,56 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:src="@mipmap/ic_history_black"
+    />
+
+    <RelativeLayout
+        android:id="@+id/Add_comment_set"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+        <EditText
+            android:id="@+id/Add_comment_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/white"
+            android:enabled="false"
+            android:gravity="top"
+            android:hint="Commentaire"
+            android:paddingBottom="50dp"
+            />
+
+        <Button
+            android:id="@+id/Add_comment_validate_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valider"
+            android:enabled="false"
+            android:layout_alignBaseline="@id/Add_comment_view"
+            android:layout_alignLeft="@id/Add_comment_view"
+            android:layout_marginLeft="15dp"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:layout_alignParentBottom="true"
         />
+
+        <Button
+            android:id="@+id/Add_comment_erase_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Annuler"
+            android:enabled="false"
+            android:layout_alignBaseline="@id/Add_comment_view"
+            android:layout_alignRight="@id/Add_comment_view"
+            android:layout_marginRight="15dp"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:layout_alignParentBottom="true"
+        />
+    </RelativeLayout>
 
 </RelativeLayout>
