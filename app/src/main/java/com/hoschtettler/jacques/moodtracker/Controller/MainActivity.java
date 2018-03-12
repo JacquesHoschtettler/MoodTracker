@@ -18,6 +18,8 @@ import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
 import java.util.ArrayList;
 
+import static android.graphics.Color.DKGRAY;
+
 /**
  * @author jacques
  * on 29/01/18
@@ -27,7 +29,8 @@ import java.util.ArrayList;
  */
 // This app must be usable with the Kitkat level (Android 4.4)
 @TargetApi(19)              
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+{
     private ImageView mSmiley;         // current icon of the mood.
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Memorisation mMemo;             //  memorization object
     private Mood mCurrentMood;             // current mood to display and to memorize.
     private MoodList mReferencedMoods;     // List of the referenced moods
+    private View mV;
 
 
     /**
@@ -55,24 +59,25 @@ public class MainActivity extends AppCompatActivity {
      * @param savedInstanceState
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState)
+    {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
 
         // Plugging the elements of the main screen
-        mSmiley = (ImageView) findViewById(R.id.Mood_icon);
-        mAdd_Comment = (ImageButton) findViewById(R.id.Add_comment);
-        mHistory = (ImageButton) findViewById(R.id.Show_mood_week);
-        mValidateComment = (Button) findViewById(R.id.Add_comment_validate_btn);
-        mEraseComment = (Button) findViewById(R.id.Add_comment_erase_btn);
+        mSmiley          = (ImageView)      findViewById(R.id.Mood_icon);
+        mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
+        mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
+        mValidateComment = (Button)         findViewById(R.id.Add_comment_validate_btn);
+        mEraseComment    = (Button)         findViewById(R.id.Add_comment_erase_btn);
         mAdd_Comment_Set = (RelativeLayout) findViewById(R.id.Add_comment_set);
-        mComment = (EditText) findViewById(R.id.Add_comment_view);
+        mComment         = (EditText)       findViewById(R.id.Add_comment_view);
 
         // Set the interactives objects on listening position
-        mAdd_Comment.setOnClickListener((View.OnClickListener) this);
-        mAdd_Comment_Set.setOnClickListener((View.OnClickListener) this);
-        mValidateComment.setOnClickListener((View.OnClickListener) this);
-        mEraseComment.setOnClickListener((View.OnClickListener) this);
+        mAdd_Comment.setOnClickListener(this);
+        mAdd_Comment_Set.setOnClickListener(this);
+        mValidateComment.setOnClickListener(this);
+        mEraseComment.setOnClickListener(this);
 
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
@@ -96,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void OnClick(View v)
+    @Override
+    public void onClick(View v)
     {
         int buttonIndex = (int) v.getTag();
         switch (buttonIndex)
@@ -106,39 +111,56 @@ public class MainActivity extends AppCompatActivity {
                 mAdd_Comment_Set.setVisibility(View.VISIBLE);
                 mComment.setEnabled(true);
                 String tempString = mCurrentMood.getMoodComment();
-                if (tempString != "") {
+                if (tempString != "")
+                {
                     mComment.setText(tempString);
                 }
 
-                mComment.addTextChangedListener(new TextWatcher() {
-                                                    @Override
-                                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                                    }
+                mComment.addTextChangedListener(new TextWatcher()
+                {
+                  @Override
+                  public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                  {
+                  }
 
-                                                    @Override
-                                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                                        mValidateComment.setEnabled(true);
-                                                        mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                                        mEraseComment.setEnabled(true);
-                                                        mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                                    }
+                  @Override
+                  public void onTextChanged(CharSequence s, int start, int before, int count)
+                  {
+                    mValidateComment.setEnabled(true);
+                    mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    mEraseComment.setEnabled(true);
+                    mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                  }
 
-                                                    @Override
-                                                    public void afterTextChanged(Editable s) {
-                                                    }
-                                                }
+                  @Override
+                  public void afterTextChanged(Editable s)
+                  {
+                  }
+                }
                 );
             break;
+
             case 1 :
                 tempString = mComment.getText().toString();
                 mCurrentMood.setMoodComment(tempString);
+                closeAddComment();
             break;
+
             case 2 :
                 tempString = "" ;
                 mCurrentMood.setMoodComment(tempString);
+                closeAddComment();
             break;
         }
+    }
 
-
+    private void closeAddComment()
+    {
+        mAdd_Comment_Set.setVisibility(View.INVISIBLE);
+        mComment.setEnabled(false);
+        mValidateComment.setEnabled(false);
+        mValidateComment.setTextColor(DKGRAY) ;
+        mEraseComment.setEnabled(false);
+        mEraseComment.setTextColor(DKGRAY);
     }
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity">
+    tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity"
+    >
 
     <ImageView
         android:id="@+id/Mood_icon"
@@ -58,6 +59,7 @@
             android:background="@android:color/white"
             android:enabled="false"
             android:gravity="top"
+            android:textColor="@android:color/black"
             android:hint="Commentaire"
             android:paddingBottom="50dp"
             />
