@@ -1,5 +1,6 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Mood mCurrentMood;             // current mood to display and to memorize.
     private MoodList mReferencedMoods;     // List of the referenced moods
     private View mV;
-
+    private SharedPreferences mMoodsMemorized;
 
     /**
      * Initalization of the display and of the Mood
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mReferencedMoods = new MoodList();
 
+        mMoodsMemorized = getPreferences(MODE_PRIVATE);
+
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
          * the moods are shifted of a day (the sixth day become the seventh, the
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * Else the current mood is the mood memorized with the index 0
          */
         mMemo = new Memorisation();
-        mCurrentMood = mMemo.initializationOfTheMood();
+        mCurrentMood = mMemo.initializationOfTheMood(mMoodsMemorized);
 
         int indexMood = mCurrentMood.getMoodIndex();
         mSmiley.setImageResource(mReferencedMoods.getMoodName(indexMood));
@@ -110,11 +113,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 0:
                 mAdd_Comment_Set.setVisibility(View.VISIBLE);
                 mComment.setEnabled(true);
+
+                // Avoid a another try of writing a another comment
+                mAdd_Comment.setEnabled(false);
+
+                // Avoid to erase a previous comment
+                mEraseComment.setEnabled(true);
+                mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+
                 String tempString = mCurrentMood.getMoodComment();
-                if (tempString != "")
-                {
-                    mComment.setText(tempString);
-                }
+                mComment.setText(tempString);
 
                 mComment.addTextChangedListener(new TextWatcher()
                 {
@@ -128,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                   {
                     mValidateComment.setEnabled(true);
                     mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    mEraseComment.setEnabled(true);
-                    mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
                   }
 
                   @Override
@@ -142,25 +148,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case 1 :
                 tempString = mComment.getText().toString();
-                mCurrentMood.setMoodComment(tempString);
-                closeAddComment();
+                closeAddComment(tempString);
             break;
 
             case 2 :
                 tempString = "" ;
-                mCurrentMood.setMoodComment(tempString);
-                closeAddComment();
+                closeAddComment(tempString);
             break;
         }
     }
 
-    private void closeAddComment()
+    private void closeAddComment(String comment)
     {
+        mCurrentMood.setMoodComment(comment);
+        mMemo.setMemorisationCurrentComment(mMoodsMemorized, comment);
+        mCurrentMood.setMoodComment(comment);
         mAdd_Comment_Set.setVisibility(View.INVISIBLE);
         mComment.setEnabled(false);
         mValidateComment.setEnabled(false);
         mValidateComment.setTextColor(DKGRAY) ;
         mEraseComment.setEnabled(false);
         mEraseComment.setTextColor(DKGRAY);
+
+        mAdd_Comment.setEnabled(true);
     }
 }

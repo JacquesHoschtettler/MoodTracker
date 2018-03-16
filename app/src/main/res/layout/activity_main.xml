@@ -47,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        >
 
         <EditText
             android:id="@+id/Add_comment_view"
@@ -76,7 +77,7 @@
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
             android:layout_alignParentBottom="true"
-        />
+            />
 
         <Button
             android:id="@+id/Add_comment_erase_btn"
@@ -90,7 +91,8 @@
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
             android:layout_alignParentBottom="true"
-        />
+            />
+        
     </RelativeLayout>
 
 </RelativeLayout>
