@@ -1,5 +1,6 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View mV;
     private SharedPreferences mMoodsMemorized;
 
+    // Identification of the history activity
+    public static final int HISTORY_ACTIVITY_REQUEST_CODE = 7 ;
+    public static final String HISTORY_MOODS_WEEKLY = "HISTORY_MOODS_WEEKLY" ;
+
     /**
      * Initalization of the display and of the Mood
      *
@@ -79,11 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdd_Comment_Set.setOnClickListener(this);
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
+        mHistory.setOnClickListener(this);
 
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
         mValidateComment.setTag(1);
         mEraseComment.setTag(2);
+        mHistory.setTag(3);
 
         mReferencedMoods = new MoodList();
 
@@ -114,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAdd_Comment_Set.setVisibility(View.VISIBLE);
                 mComment.setEnabled(true);
 
-                // Avoid a another try of writing a another comment
+                // Avoid a another try of writing a another comment or to go to history
                 mAdd_Comment.setEnabled(false);
+                mHistory.setEnabled(false) ;
 
                 // Avoid to erase a previous comment
                 mEraseComment.setEnabled(true);
@@ -155,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tempString = "" ;
                 closeAddComment(tempString);
             break;
+            case 3 :
+                Intent historyActivity = new Intent(MainActivity.this, WeekHistory.class) ;
+                startActivity(historyActivity);
+            break ;
         }
     }
 
@@ -171,5 +183,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEraseComment.setTextColor(DKGRAY);
 
         mAdd_Comment.setEnabled(true);
+        mHistory.setEnabled(true);
     }
 }

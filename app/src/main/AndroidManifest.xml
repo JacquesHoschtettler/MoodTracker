@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Model.Tools.Memorisation" />
+        <activity android:name=".Controller.WeekHistory"></activity>
     </application>
 
 </manifest>

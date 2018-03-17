@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_rowWeight="1"
+    android:background="@color/light_grey"
+    >
+
+    <TableRow
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/sevenDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/faded_red"
+            android:padding="5dp"
+            android:text="Il y a une
+ semaine"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/sevenDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:visibility="visible"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/faded_red"
+            />
+
+        <View
+            android:id="@+id/sevenDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/sixDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/warm_grey"
+            android:padding="5dp"
+            android:text="Il y a six
+ jours"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/sixDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/warm_grey"
+            />
+
+        <View
+            android:id="@+id/sixDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            />
+    </TableRow>
+
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/fiveDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/cornflower_blue_65"
+            android:padding="5dp"
+            android:text="Il y a cinq
+ jours"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/fiveDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/cornflower_blue_65"
+            />
+
+        <View
+            android:id="@+id/fiveDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            />
+    </TableRow>
+
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/fourDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@color/light_sage"
+            android:padding="5dp"
+            android:text="Il y a quatre
+ jours"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+            />
+
+        <ImageButton
+            android:id="@+id/fourDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/light_sage"
+            />
+
+        <View
+            android:id="@+id/fourDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/threeDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:background="@color/banana_yellow"
+            android:padding="5dp"
+            android:text="Il y a trois
+ jours"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/threeDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/banana_yellow"
+            />
+        <View
+            android:id="@+id/threeDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/twoDaysAgo_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/faded_red"
+            android:padding="5dp"
+            android:text="Avant- hier"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/twoDaysComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/faded_red"
+            />
+
+        <View
+            android:id="@+id/twoDaysAgoComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/yesterday_view"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/cornflower_blue_65"
+            android:padding="5dp"
+            android:text="Hier"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/yesterdayComment_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingHorizontal="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/cornflower_blue_65"
+            />
+
+        <View
+            android:id="@+id/yesterdayComplement_view"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            />
+    </TableRow>
+
+</TableLayout>
