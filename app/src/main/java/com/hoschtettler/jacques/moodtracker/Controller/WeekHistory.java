@@ -1,11 +1,13 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.hoschtettler.jacques.moodtracker.Model.MoodList;
 import com.hoschtettler.jacques.moodtracker.R;
 
 public class WeekHistory extends AppCompatActivity implements View.OnClickListener
@@ -14,9 +16,13 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
     private ImageButton[] mDaysComment = new ImageButton[7];
     private View[] mDaysComplement = new View[7];
 
+    private MoodList mReferencedMoods;     // List of the referenced moods
+
     private SharedPreferences mMoodsMemorized;
+    public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +51,15 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
         mDaysComment[6] = (ImageButton) findViewById(R.id.yesterdayComment_btn) ;
         mDaysComplement[6]= (View) findViewById(R.id.yesterdayComplement_view) ;
 
-        mMoodsMemorized = getPreferences(MODE_PRIVATE);
+        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION MODE_PRIVATE);
+        mReferencedMoods = new MoodList();
 
         // Initialisation of the moods
-
+        for (int i = 7 ; i > 0 ; --1)
+        {
+            mDaysMood[i].setBackground(mReferencedMoods.getMoodColor(mMoodsMemorized.getInt())
+            );
+        }
 
 
     }

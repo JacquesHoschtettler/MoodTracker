@@ -48,16 +48,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * - index 2 for the mood of the day before yesterday ;
      * - ...
      */
-    private ArrayList<Mood> mWeekMood = new ArrayList<>();
+    private ArrayList<Mood> mWeekMood = new ArrayList<>(7);
     private Memorisation mMemo;             //  memorization object
     private Mood mCurrentMood;             // current mood to display and to memorize.
     private MoodList mReferencedMoods;     // List of the referenced moods
-    private View mV;
     private SharedPreferences mMoodsMemorized;
 
     // Identification of the history activity
     public static final int HISTORY_ACTIVITY_REQUEST_CODE = 7 ;
     public static final String HISTORY_MOODS_WEEKLY = "HISTORY_MOODS_WEEKLY" ;
+    public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
     /**
      * Initalization of the display and of the Mood
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mReferencedMoods = new MoodList();
 
-        mMoodsMemorized = getPreferences(MODE_PRIVATE);
+        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * fifth become the sixth, etc.
          * Else the current mood is the mood memorized with the index 0
          */
-        mMemo = new Memorisation();
+        mMemo = new Memorisation(mMoodsMemorized);
         mCurrentMood = mMemo.initializationOfTheMood(mMoodsMemorized);
 
         int indexMood = mCurrentMood.getMoodIndex();
@@ -125,9 +125,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAdd_Comment.setEnabled(false);
                 mHistory.setEnabled(false) ;
 
-                // Avoid to erase a previous comment
+                // Avoid to erase or to vulidate a previous comment
                 mEraseComment.setEnabled(true);
                 mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mValidateComment.setEnabled(true);
+                mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                 String tempString = mCurrentMood.getMoodComment();
                 mComment.setText(tempString);
@@ -142,8 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                   @Override
                   public void onTextChanged(CharSequence s, int start, int before, int count)
                   {
-                    mValidateComment.setEnabled(true);
-                    mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
                   }
 
                   @Override
