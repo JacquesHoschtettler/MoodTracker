@@ -10,4 +10,10 @@
     <string name="Comment">Commentaire</string>
     <string name="Validate">Valider</string>
     <string name="Erase">Effacer</string>
+    <string name="Width1">77</string>
+    <string name="Width2">154</string>
+    <string name="Width3">231</string>
+    <string name="Width4">308</string>
+    <string name="Width5">385</string>
+    <string name="Padding">15dp</string>
 </resources>

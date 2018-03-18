@@ -9,180 +9,167 @@
 
     <TableRow
         android:layout_weight="1">
+        <RelativeLayout>
+            <TextView
+                android:id="@+id/sevenDaysAgo_view"
+                android:layout_width="@string/Width1"
+                android:layout_height="match_parent"
+                android:background="@color/faded_red"
+                android:padding="5dp"
+                android:text="@string/SevenDaysAgo"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                />
 
-        <TextView
-            android:id="@+id/sevenDaysAgo_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/faded_red"
-            android:padding="5dp"
-            android:text="@string/SevenDaysAgo"
-            android:textColor="@android:color/black"
-            android:textSize="15dp" />
-
-        <ImageButton
-            android:id="@+id/sevenDaysComment_btn"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:visibility="visible"
-            android:paddingHorizontal="10dp"
-            android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/faded_red"
-            />
-
-        <View
-            android:id="@+id/sevenDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            />
+            <ImageButton
+                android:id="@+id/sevenDaysComment_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignRight="@+id/sevenDaysAgo_view"
+                android:layout_alignEnd="@+id/sevenDaysAgo_view"
+                android:padding="@string/Padding"
+                android:src="@mipmap/ic_comment_black_48px"
+                android:background="@color/transparent"
+                tools:ignore="UnknownId" />
+        </RelativeLayout>
     </TableRow>
 
     <TableRow
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/sixDaysAgo_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@color/warm_grey"
-            android:padding="5dp"
-            android:text="@string/SixDaysAgo"
-            android:textColor="@android:color/black"
-            android:textSize="15dp" />
+        <RelativeLayout>
+            <TextView
+                android:id="@+id/sixDaysAgo_view"
+                android:layout_width="@string/Width2"
+                android:layout_height="match_parent"
+                android:background="@color/warm_grey"
+                android:padding="5dp"
+                android:text="@string/SixDaysAgo"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                />
 
-        <ImageButton
-            android:id="@+id/sixDaysComment_btn"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:paddingHorizontal="10dp"
-            android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/warm_grey"
-            />
-
-        <View
-            android:id="@+id/sixDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            />
+            <ImageButton
+                android:id="@+id/sixDaysComment_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignRight="@+id/sixDaysAgo_view"
+                android:layout_alignEnd="@+id/sixDaysAgo_view"
+                android:padding="@string/Padding"
+                android:src="@mipmap/ic_comment_black_48px"
+                android:background="@color/transparent"
+                tools:ignore="UnknownId" />
+        </RelativeLayout>
     </TableRow>
 
 
     <TableRow
         android:layout_weight="1">
+        <RelativeLayout>
         <TextView
             android:id="@+id/fiveDaysAgo_view"
-            android:layout_width="40dp"
+            android:layout_width="@string/Width3"
             android:layout_height="match_parent"
-            android:layout_weight="5"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
             android:text="@string/FiveDaysAgo"
             android:textColor="@android:color/black"
-            android:textSize="15dp" />
+            android:textSize="15sp"
+            />
 
         <ImageButton
             android:id="@+id/fiveDaysComment_btn"
             android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:paddingHorizontal="10dp"
+            android:layout_width="wrap_content"
+            android:layout_alignRight="@+id/fiveDaysAgo_view"
+            android:layout_alignEnd="@+id/fiveDaysAgo_view"
+            android:padding="@string/Padding"
             android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/cornflower_blue_65"
-            />
-
-        <View
-            android:id="@+id/fiveDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            />
+            android:background="@color/transparent"
+            tools:ignore="UnknownId" />
+        </RelativeLayout>
     </TableRow>
 
 
     <TableRow
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/fourDaysAgo_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:background="@color/light_sage"
-            android:padding="5dp"
-            android:text="@string/FourDaysAgo"
-            android:textColor="@android:color/black"
-            android:textSize="15dp"
-            />
+        <RelativeLayout>
+            <TextView
+                android:id="@+id/fourDaysAgo_view"
+                android:layout_width="@string/Width4"
+                android:layout_height="match_parent"
+                android:background="@color/light_sage"
+                android:padding="5dp"
+                android:text="@string/FourDaysAgo"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                />
 
-        <ImageButton
-            android:id="@+id/fourDaysComment_btn"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:paddingHorizontal="10dp"
-            android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/light_sage"
-            />
-
-        <View
-            android:id="@+id/fourDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            <ImageButton
+                android:id="@+id/fourDaysComment_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignRight="@+id/fourDaysAgo_view"
+                android:layout_alignEnd="@+id/fourDaysAgo_view"
+                android:padding="@string/Padding"
+                android:src="@mipmap/ic_comment_black_48px"
+                android:background="@color/transparent"
+                tools:ignore="UnknownId" />
+        </RelativeLayout>
     </TableRow>
 
     <TableRow
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/threeDaysAgo_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="9"
-            android:background="@color/banana_yellow"
-            android:padding="5dp"
-            android:text="@string/ThreeDaysAgo"
-            android:textColor="@android:color/black"
-            android:textSize="15dp" />
+        <RelativeLayout>
+            <TextView
+                android:id="@+id/threeDaysAgo_view"
+                android:layout_width="@string/Width5"
+                android:layout_height="match_parent"
+                android:background="@color/banana_yellow"
+                android:padding="5dp"
+                android:text="@string/ThreeDaysAgo"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                />
 
-        <ImageButton
-            android:id="@+id/threeDaysComment_btn"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:paddingHorizontal="10dp"
-            android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/banana_yellow"
-            />
-        <View
-            android:id="@+id/threeDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            />
+            <ImageButton
+                android:id="@+id/threeDaysComment_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignRight="@+id/threeDaysAgo_view"
+                android:layout_alignEnd="@+id/threeDaysAgo_view"
+                android:padding="@string/Padding"
+                android:src="@mipmap/ic_comment_black_48px"
+                android:background="@color/transparent"
+                tools:ignore="UnknownId" />
+        </RelativeLayout>
+
     </TableRow>
 
     <TableRow
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/twoDaysAgo_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/faded_red"
-            android:padding="5dp"
-            android:text="@string/TwoDaysAgo"
-            android:textColor="@android:color/black"
-            android:textSize="15dp" />
+        <RelativeLayout>
+            <TextView
+                android:id="@+id/twoDaysAgo_view"
+                android:layout_width="@string/Width1"
+                android:layout_height="match_parent"
+                android:background="@color/faded_red"
+                android:padding="5dp"
+                android:text="@string/TwoDaysAgo"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                />
 
-        <ImageButton
-            android:id="@+id/twoDaysComment_btn"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:paddingHorizontal="10dp"
-            android:src="@mipmap/ic_comment_black_48px"
-            android:background="@color/faded_red"
-            />
-
-        <View
-            android:id="@+id/twoDaysAgoComplement_view"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            />
+            <ImageButton
+                android:id="@+id/twoDaysComment_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignRight="@+id/twoDaysAgo_view"
+                android:layout_alignEnd="@+id/twoDaysAgo_view"
+                android:padding="@string/Padding"
+                android:src="@mipmap/ic_comment_black_48px"
+                android:background="@color/transparent"
+                tools:ignore="UnknownId" />
+        </RelativeLayout>
     </TableRow>
 
     <TableRow
@@ -190,7 +177,7 @@
         <RelativeLayout>
         <TextView
             android:id="@+id/yesterday_view"
-            android:layout_width="192dp"
+            android:layout_width="@string/Width3"
             android:layout_height="match_parent"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
@@ -205,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_alignRight="@+id/yesterday_view"
             android:layout_alignEnd="@+id/yesterday_view"
-            android:padding="10dp"
+            android:padding="@string/Padding"
             android:src="@mipmap/ic_comment_black_48px"
             android:background="@color/transparent"
             tools:ignore="UnknownId" />
