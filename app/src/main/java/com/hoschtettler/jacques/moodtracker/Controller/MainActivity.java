@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCurrentMood = mMemo.initializationOfTheMood(mMoodsMemorized);
 
         int indexMood = mCurrentMood.getMoodIndex();
-        mSmiley.setImageResource(mReferencedMoods.getMoodName(indexMood));
+        mSmiley.setImageResource(mReferencedMoods.getMoodIcon(indexMood));
         mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(indexMood));
 
     }
