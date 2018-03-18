@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MoodTracker</string>
+    <string name="Yesterday">Hier</string>
+    <string name="TwoDaysAgo">Avant-hier</string>
+    <string name="ThreeDaysAgo">Il y a 3 jours</string>
+    <string name="FourDaysAgo">Il y a 4 jours</string>
+    <string name="FiveDaysAgo">Il y a 5 jours</string>
+    <string name="SixDaysAgo">Il y a 6 jours</string>
+    <string name="SevenDaysAgo">Il y a 7 jours</string>
+    <string name="Comment">Commentaire</string>
+    <string name="Validate">Valider</string>
+    <string name="Erase">Effacer</string>
 </resources>
