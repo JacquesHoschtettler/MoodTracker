@@ -46,61 +46,63 @@
         android:src="@mipmap/ic_history_black"
     />
 
-    <RelativeLayout
+    <EditText
+        android:id="@+id/Add_comment_view"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@android:color/white"
         android:visibility="invisible"
-        >
+        android:enabled="false"
+        android:textColor="@android:color/black"
+        android:gravity="top"
+        android:hint="@string/Comment"
+    />
 
-        <EditText
-            android:id="@+id/Add_comment_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="40dp"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:gravity="top"
-            android:textColor="@android:color/black"
-            android:hint="@string/Comment"
-            android:paddingBottom="50dp"
-            />
+    <View
+        android:id="@+id/Add_comment_complement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/Add_comment_validate_btn"
+        android:layout_toStartOf="@id/Add_comment_validate_btn"
+        android:layout_below="@id/Add_comment_view"
+        android:layout_alignLeft="@id/Add_comment_view"
+        android:layout_alignStart="@id/Add_comment_view"
+        android:layout_alignBottom="@id/Add_comment_validate_btn"
+        android:background="@android:color/white"
+        android:visibility="invisible"
+        android:enabled="false"
+    />
 
-        <Button
-            android:id="@+id/Add_comment_validate_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Validate"
-            android:enabled="false"
-            android:layout_alignBaseline="@id/Add_comment_view"
-            android:layout_alignLeft="@id/Add_comment_view"
-            android:layout_alignStart="@id/Add_comment_view"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:textColor="@android:color/darker_gray"
-            android:background="@android:color/white"
-            android:layout_alignParentBottom="true"
-            />
+    <Button
+        android:id="@+id/Add_comment_validate_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Validate"
+        android:layout_toLeftOf="@id/Add_comment_erase_btn"
+        android:layout_below="@id/Add_comment_view"
+        android:layout_toStartOf="@id/Add_comment_erase_btn"
+        android:visibility="invisible"
+        android:enabled="false"
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/white"
+    />
 
-        <Button
-            android:id="@+id/Add_comment_erase_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Erase"
-            android:enabled="false"
-            android:layout_alignBaseline="@id/Add_comment_view"
-            android:layout_alignRight="@id/Add_comment_view"
-            android:layout_alignEnd="@id/Add_comment_view"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
-            android:textColor="@android:color/darker_gray"
-            android:background="@android:color/white"
-            android:layout_alignParentBottom="true"
-            />
+    <Button
+        android:id="@+id/Add_comment_erase_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Erase"
+        android:layout_below="@id/Add_comment_view"
+        android:layout_alignRight="@id/Add_comment_view"
+        android:layout_alignEnd="@id/Add_comment_view"
+        android:visibility="invisible"
+        android:enabled="false"
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/white"
+    />
         
-    </RelativeLayout>
-
 </RelativeLayout>

@@ -3,6 +3,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,13 +34,15 @@ import static android.graphics.Color.DKGRAY;
 @TargetApi(19)              
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private ImageView mSmiley;         // current icon of the mood.
+    private ImageView mSmiley;         // current icon of the mood:
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
+
+    private EditText mComment;
     private Button mValidateComment;   // valide the writed commment
     private Button mEraseComment;      // erase the writed comment
-    private RelativeLayout mAdd_Comment_Set; // windows where the comment is writing
-    private EditText mComment;
+    private View mComment_Complement ; // windows where the comment is writing
+
 
     /**
      * Moods of the last seven days.
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String HISTORY_MOODS_WEEKLY = "HISTORY_MOODS_WEEKLY" ;
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
+
     /**
      * Initalization of the display and of the Mood
      *
@@ -74,17 +78,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSmiley          = (ImageView)      findViewById(R.id.Mood_icon);
         mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
         mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
+
         mValidateComment = (Button)         findViewById(R.id.Add_comment_validate_btn);
         mEraseComment    = (Button)         findViewById(R.id.Add_comment_erase_btn);
-        mAdd_Comment_Set = (RelativeLayout) findViewById(R.id.Add_comment_set);
         mComment         = (EditText)       findViewById(R.id.Add_comment_view);
+        mComment_Complement = (View)        findViewById(R.id.Add_comment_complement);
 
         // Set the interactives objects on listening position
         mAdd_Comment.setOnClickListener(this);
-        mAdd_Comment_Set.setOnClickListener(this);
+        mHistory.setOnClickListener(this);
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
-        mHistory.setOnClickListener(this);
 
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
@@ -118,18 +122,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (buttonIndex)
         {
             case 0:
-                mAdd_Comment_Set.setVisibility(View.VISIBLE);
-                mComment.setEnabled(true);
+                mComment.setVisibility(View.VISIBLE);
+                mComment_Complement.setVisibility(View.VISIBLE);
+                mValidateComment.setVisibility(View.VISIBLE);
+                mValidateComment.setEnabled(true) ;
+                mEraseComment.setVisibility(View.VISIBLE);
 
                 // Avoid a another try of writing a another comment or to go to history
                 mAdd_Comment.setEnabled(false);
                 mHistory.setEnabled(false) ;
 
-                // Avoid to erase or to vulidate a previous comment
+                // Avoid to erase or to validate a previous comment
+                mComment.setEnabled(true);
                 mEraseComment.setEnabled(true);
-                mEraseComment.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mValidateComment.setEnabled(true);
-                mValidateComment.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                 String tempString = mCurrentMood.getMoodComment();
                 mComment.setText(tempString);
@@ -174,13 +180,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         mCurrentMood.setMoodComment(comment);
         mMemo.setMemorisationCurrentComment(mMoodsMemorized, comment);
-        mCurrentMood.setMoodComment(comment);
-        mAdd_Comment_Set.setVisibility(View.INVISIBLE);
+        mComment.setVisibility(View.INVISIBLE);
         mComment.setEnabled(false);
+        mComment_Complement.setVisibility(View.INVISIBLE);
+        mValidateComment.setVisibility(View.INVISIBLE);
         mValidateComment.setEnabled(false);
-        mValidateComment.setTextColor(DKGRAY) ;
+        mEraseComment.setVisibility(View.INVISIBLE);
         mEraseComment.setEnabled(false);
-        mEraseComment.setTextColor(DKGRAY);
 
         mAdd_Comment.setEnabled(true);
         mHistory.setEnabled(true);

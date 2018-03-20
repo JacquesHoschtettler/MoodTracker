@@ -31,25 +31,26 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
 
         @SuppressLint("WrongConstant")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+        {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_history);
 
         // Plugging the elements of the history display
-        mDaysMood[0] = (View) findViewById(R.id.sevenDaysAgo_view) ;
-        mDaysComment[0] = (ImageButton) findViewById(R.id.sevenDaysComment_btn) ;
-        mDaysMood[1] = (View) findViewById(R.id.sixDaysAgo_view) ;
-        mDaysComment[1] = (ImageButton) findViewById(R.id.sixDaysComment_btn) ;
-        mDaysMood[2] = (View) findViewById(R.id.fiveDaysAgo_view) ;
-        mDaysComment[2] = (ImageButton) findViewById(R.id.fiveDaysComment_btn) ;
+        mDaysMood[6] = (View) findViewById(R.id.sevenDaysAgo_view) ;
+        mDaysComment[6] = (ImageButton) findViewById(R.id.sevenDaysComment_btn) ;
+        mDaysMood[5] = (View) findViewById(R.id.sixDaysAgo_view) ;
+        mDaysComment[5] = (ImageButton) findViewById(R.id.sixDaysComment_btn) ;
+        mDaysMood[4] = (View) findViewById(R.id.fiveDaysAgo_view) ;
+        mDaysComment[4] = (ImageButton) findViewById(R.id.fiveDaysComment_btn) ;
         mDaysMood[3] = (View) findViewById(R.id.fourDaysAgo_view) ;
         mDaysComment[3] = (ImageButton) findViewById(R.id.fourDaysComment_btn) ;
-        mDaysMood[4] = (View) findViewById(R.id.threeDaysAgo_view) ;
-        mDaysComment[4] = (ImageButton) findViewById(R.id.threeDaysComment_btn) ;
-        mDaysMood[5] = (View) findViewById(R.id.twoDaysAgo_view) ;
-        mDaysComment[5] = (ImageButton) findViewById(R.id.twoDaysComment_btn) ;
-        mDaysMood[6] = (View) findViewById(R.id.yesterday_view) ;
-        mDaysComment[6] = (ImageButton) findViewById(R.id.yesterdayComment_btn) ;
+        mDaysMood[2] = (View) findViewById(R.id.threeDaysAgo_view) ;
+        mDaysComment[2] = (ImageButton) findViewById(R.id.threeDaysComment_btn) ;
+        mDaysMood[1] = (View) findViewById(R.id.twoDaysAgo_view) ;
+        mDaysComment[1] = (ImageButton) findViewById(R.id.twoDaysComment_btn) ;
+        mDaysMood[0] = (View) findViewById(R.id.yesterday_view) ;
+        mDaysComment[0] = (ImageButton) findViewById(R.id.yesterdayComment_btn) ;
 
         // Identifying the buttons
         for (int i = 0 ; i <7 ; ++i)
@@ -57,17 +58,20 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
             mDaysComment[i].getTag(i) ;
         }
 
-        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION MODE_PRIVATE);
+        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
         Memorisation moodsMemory = new Memorisation(mMoodsMemorized) ;
-        mWeeklyMoods = moodsMemory.getMemorizedMoods() ;
+        for (int i = 0 ; i < 7 ; ++i)
+        {
+            mWeeklyMoods.add(moodsMemory.getMemorizedMoods().get(i));
+        }
 
         mReferencedMoods = new MoodList() ;
 
         // Initialisation of the moods
         for (int i = 0 ; i <7 ; ++i)
         {
-            mDaysMood[i].setBackgroundColor(mWeeklyMoods.get(i).getMoodIndex());
-            if (mWeeklyMoods.get(i).getMoodComment() != "")
+          mDaysMood[i].setBackgroundColor(mWeeklyMoods.get(i).getMoodIndex());
+            if (mWeeklyMoods.get(i).getMoodComment().equals((String)""))
             {
                 mDaysComment[i].setVisibility(View.VISIBLE) ;
                 mDaysComment[i].setEnabled(true);
@@ -83,6 +87,10 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onClick(View v)
         {
+            //Test
+            System.out.println("Bouton appelant : " + v.getTag()) ;
+
+
             String comment = mWeeklyMoods.get((int)v.getTag()).getMoodComment() ;
             Toast.makeText(this, comment, Toast.LENGTH_LONG).show() ;
         }
