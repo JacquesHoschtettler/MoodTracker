@@ -7,12 +7,13 @@
     android:background="@color/light_grey"
     >
 
+<!--    Displays the moods on a week ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
             <TextView
                 android:id="@+id/sevenDaysAgo_view"
-                android:layout_width="@string/Width1"
+                android:layout_width="77dp"
                 android:layout_height="match_parent"
                 android:background="@color/faded_red"
                 android:padding="5dp"
@@ -27,19 +28,22 @@
                 android:layout_width="wrap_content"
                 android:layout_alignRight="@id/sevenDaysAgo_view"
                 android:layout_alignEnd="@id/sevenDaysAgo_view"
-                android:padding="@string/Padding"
+                android:padding="15dp"
+                android:contextClickable="true"
+                android:visibility="invisible"
                 android:src="@mipmap/ic_comment_black_48px"
                 android:background="@color/transparent"
-                tools:ignore="UnknownId" />
+                />
         </RelativeLayout>
     </TableRow>
 
+<!--    Displays the moods on six days ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
             <TextView
                 android:id="@+id/sixDaysAgo_view"
-                android:layout_width="@string/Width2"
+                android:layout_width="154dp"
                 android:layout_height="match_parent"
                 android:background="@color/warm_grey"
                 android:padding="5dp"
@@ -54,20 +58,22 @@
                 android:layout_width="wrap_content"
                 android:layout_alignRight="@id/sixDaysAgo_view"
                 android:layout_alignEnd="@id/sixDaysAgo_view"
-                android:padding="@string/Padding"
+                android:padding="15dp"
+                android:contextClickable="true"
+                android:visibility="invisible"
                 android:src="@mipmap/ic_comment_black_48px"
                 android:background="@color/transparent"
-                tools:ignore="UnknownId" />
+                />
         </RelativeLayout>
     </TableRow>
 
-
+    <!--    Displays the moods on five days ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
         <TextView
             android:id="@+id/fiveDaysAgo_view"
-            android:layout_width="@string/Width3"
+            android:layout_width="231dp"
             android:layout_height="match_parent"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
@@ -82,20 +88,22 @@
             android:layout_width="wrap_content"
             android:layout_alignRight="@id/fiveDaysAgo_view"
             android:layout_alignEnd="@id/fiveDaysAgo_view"
-            android:padding="@string/Padding"
+            android:padding="15dp"
+            android:contextClickable="true"
+            android:visibility="invisible"
             android:src="@mipmap/ic_comment_black_48px"
             android:background="@color/transparent"
-            tools:ignore="UnknownId" />
+            />
         </RelativeLayout>
     </TableRow>
 
-
+    <!--    Displays the moods on four days ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
             <TextView
                 android:id="@+id/fourDaysAgo_view"
-                android:layout_width="@string/Width4"
+                android:layout_width="308dp"
                 android:layout_height="match_parent"
                 android:background="@color/light_sage"
                 android:padding="5dp"
@@ -110,19 +118,22 @@
                 android:layout_width="wrap_content"
                 android:layout_alignRight="@id/fourDaysAgo_view"
                 android:layout_alignEnd="@id/fourDaysAgo_view"
-                android:padding="@string/Padding"
+                android:padding="15dp"
+                android:contextClickable="true"
+                android:visibility="invisible"
                 android:src="@mipmap/ic_comment_black_48px"
                 android:background="@color/transparent"
-                tools:ignore="UnknownId" />
+                />
         </RelativeLayout>
     </TableRow>
 
+<!--    Displays the moods on three days ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
             <TextView
                 android:id="@+id/threeDaysAgo_view"
-                android:layout_width="@string/Width5"
+                android:layout_width="385dp"
                 android:layout_height="match_parent"
                 android:background="@color/banana_yellow"
                 android:padding="5dp"
@@ -137,20 +148,23 @@
                 android:layout_width="wrap_content"
                 android:layout_alignRight="@id/threeDaysAgo_view"
                 android:layout_alignEnd="@id/threeDaysAgo_view"
-                android:padding="@string/Padding"
+                android:padding="15dp"
+                android:contextClickable="true"
+                android:visibility="invisible"
                 android:src="@mipmap/ic_comment_black_48px"
                 android:background="@color/transparent"
-                tools:ignore="UnknownId" />
+                />
         </RelativeLayout>
 
     </TableRow>
 
+<!--    Displays the moods on two days ago -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
             <TextView
                 android:id="@+id/twoDaysAgo_view"
-                android:layout_width="@string/Width1"
+                android:layout_width="77dp"
                 android:layout_height="match_parent"
                 android:background="@color/faded_red"
                 android:padding="5dp"
@@ -161,23 +175,26 @@
 
             <ImageButton
                 android:id="@+id/twoDaysComment_btn"
+                android:background="@color/transparent"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_alignRight="@id/twoDaysAgo_view"
                 android:layout_alignEnd="@id/twoDaysAgo_view"
-                android:padding="@string/Padding"
+                android:padding="15dp"
+                android:contextClickable="true"
+                android:visibility="invisible"
                 android:src="@mipmap/ic_comment_black_48px"
-                android:background="@color/transparent"
-                tools:ignore="UnknownId" />
+                />
         </RelativeLayout>
     </TableRow>
 
+    <!--    Displays the moods on yesterday -->
     <TableRow
         android:layout_weight="1">
         <RelativeLayout>
         <TextView
             android:id="@+id/yesterday_view"
-            android:layout_width="@string/Width3"
+            android:layout_width="154dp"
             android:layout_height="match_parent"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
@@ -192,10 +209,12 @@
             android:layout_width="wrap_content"
             android:layout_alignRight="@id/yesterday_view"
             android:layout_alignEnd="@id/yesterday_view"
-            android:padding="@string/Padding"
+            android:padding="15dp"
+            android:contextClickable="true"
+            android:visibility="invisible"
             android:src="@mipmap/ic_comment_black_48px"
             android:background="@color/transparent"
-            tools:ignore="UnknownId" />
+            />
         </RelativeLayout>
     </TableRow>
 

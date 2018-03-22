@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mComment.setVisibility(View.VISIBLE);
                 mComment_Complement.setVisibility(View.VISIBLE);
                 mValidateComment.setVisibility(View.VISIBLE);
-                mValidateComment.setEnabled(true) ;
                 mEraseComment.setVisibility(View.VISIBLE);
 
                 // Avoid a another try of writing a another comment or to go to history
