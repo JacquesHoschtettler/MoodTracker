@@ -3,7 +3,11 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,16 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
+import com.hoschtettler.jacques.moodtracker.Model.Mood;
 import com.hoschtettler.jacques.moodtracker.Model.MoodList;
+import com.hoschtettler.jacques.moodtracker.Model.MoodSlideFragment;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
-import com.hoschtettler.jacques.moodtracker.Model.Mood;
 
 import java.util.ArrayList;
-
-import static android.graphics.Color.DKGRAY;
 
 /**
  * @author jacques
@@ -32,12 +34,27 @@ import static android.graphics.Color.DKGRAY;
  * Initializes and displays the mood screen
  */
 // This app must be usable with the Kitkat level (Android 4.4)
-@TargetApi(19)              
+@TargetApi(19)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     private ImageView mSmiley;         // current icon of the mood:
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
+    /**
+     * The number of pages of moods.
+     */
+    private static final int NUM_PAGES = 5;
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
 
     private EditText mComment;
     private Button mValidateComment;   // valide the writed commment
@@ -91,7 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
 
-
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.Pager_View);
+        mPagerAdapter = new MoodSlideAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
 
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
@@ -113,15 +133,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCurrentMood = mMemo.initializationOfTheMood(mMoodsMemorized);
 
         int indexMood = mCurrentMood.getMoodIndex();
+        mPager.setCurrentItem(indexMood);
+        /*
         mSmiley.setImageResource(mReferencedMoods.getMoodIcon(indexMood));
         mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(indexMood));
-
+        */
     }
 
     public boolean onGenericMotionEvent (MotionEvent event)
     {
-
-
+        if (event.getRawY() > 0 && mPager.getCurrentItem() < NUM_PAGES) {
+            mPager.setCurrentItem((mPager.getCurrentItem() + 1));
+        } else if (event.getRawY() < 0 && mPager.getCurrentItem() > 0) {
+            mPager.setCurrentItem((mPager.getCurrentItem() - 1));
+        }
         return super.onGenericMotionEvent(event) ;
     }
 
@@ -199,5 +224,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAdd_Comment.setEnabled(true);
         mHistory.setEnabled(true);
+    }
+
+    private class MoodSlideAdapter extends FragmentPagerAdapter {
+
+        /**
+         * Default constructor
+         *
+         * @param fragmentManager
+         */
+        public MoodSlideAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        /**
+         * Creating the new view
+         *
+         * @param position
+         * @return
+         */
+        @Override
+        public Fragment getItem(int position) {
+
+            return MoodSlideFragment.create(position);
+        }
+
+        /**
+         * Return the number of moods
+         *
+         * @return NUM_PAGES
+         */
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
     }
 }
