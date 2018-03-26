@@ -8,15 +8,11 @@
     tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity"
     >
 
-    <ImageView
-        android:id="@+id/Mood_icon"
-        android:background="@color/cornflower_blue_65"
-        android:layout_centerHorizontal="true"
-        android:padding="100dp"
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/smiley_normal"
-    />
+        android:id="@+id/Pager_View"/>
+
 
     <ImageButton
         android:id="@+id/Add_comment"

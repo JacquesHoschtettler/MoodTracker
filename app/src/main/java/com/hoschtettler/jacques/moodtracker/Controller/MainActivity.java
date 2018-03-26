@@ -7,6 +7,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
 
+
+
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
         mValidateComment.setTag(1);
@@ -113,6 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSmiley.setImageResource(mReferencedMoods.getMoodIcon(indexMood));
         mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(indexMood));
 
+    }
+
+    public boolean onGenericMotionEvent (MotionEvent event)
+    {
+
+
+        return super.onGenericMotionEvent(event) ;
     }
 
     @Override
