@@ -37,7 +37,6 @@ import java.util.ArrayList;
 @TargetApi(19)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private ImageView mSmiley;         // current icon of the mood:
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
     /**
@@ -56,11 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private PagerAdapter mPagerAdapter;
 
-    private EditText mComment;
+    private EditText mComment;          // windows where the comment is writing
     private Button mValidateComment;   // valide the writed commment
     private Button mEraseComment;      // erase the writed comment
-    private View mComment_Complement ; // windows where the comment is writing
-
+    private View mComment_Complement; // empty space to fill below the EditText
 
     /**
      * Moods of the last seven days.
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          setContentView(R.layout.activity_main);
 
         // Plugging the elements of the main screen
-        mSmiley          = (ImageView)      findViewById(R.id.Mood_icon);
         mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
         mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
 
@@ -142,11 +139,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean onGenericMotionEvent (MotionEvent event)
     {
-        if (event.getRawY() > 0 && mPager.getCurrentItem() < NUM_PAGES) {
-            mPager.setCurrentItem((mPager.getCurrentItem() + 1));
-        } else if (event.getRawY() < 0 && mPager.getCurrentItem() > 0) {
-            mPager.setCurrentItem((mPager.getCurrentItem() - 1));
+        int index = mPager.getCurrentItem();
+        if (event.getRawX() > 0 && mPager.getCurrentItem() < NUM_PAGES) {
+            ++index;
+        } else if (event.getRawX() < 0 && mPager.getCurrentItem() > 0) {
+            --index;
         }
+        mCurrentMood.setMoodIndex(index);
+        mMemo.setMemorisationCurrentIndex(mMoodsMemorized, index);
+        mPager.setCurrentItem(mCurrentMood.getMoodIndex());
+
         return super.onGenericMotionEvent(event) ;
     }
 

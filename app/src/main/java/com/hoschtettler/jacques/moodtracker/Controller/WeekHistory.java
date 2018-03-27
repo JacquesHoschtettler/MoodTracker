@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -74,16 +75,19 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
        }
 
         mReferencedMoods = new MoodList() ;
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int width0 = metrics.widthPixels / 5;
 
         // Initialisation of the moods
         for (int i = 0 ; i <7 ; ++i)
         {
             int moodPassed = mWeeklyMoods.get(i).getMoodIndex() ;
             mDaysMood.get(i).setBackgroundResource(mReferencedMoods.getMoodColor(moodPassed));
-            mDaysMood.get(i).setWidth(mReferencedMoods.getModdSize(moodPassed));
+            mDaysMood.get(i).setWidth(mReferencedMoods.getModdSize(moodPassed) * width0);
             mDaysMood.get(i).setEnabled(true);
 
-            if (mWeeklyMoods.get(i).getMoodComment().equals((String)""))
+            if (mWeeklyMoods.get(i).getMoodComment().equals(""))
             {
                 mDaysComment[i].setVisibility(View.INVISIBLE) ;
                 mDaysComment[i].setEnabled(false);

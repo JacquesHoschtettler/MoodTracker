@@ -13,7 +13,7 @@
         <RelativeLayout>
             <TextView
                 android:id="@+id/sevenDaysAgo_view"
-                android:layout_width="77dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/faded_red"
                 android:padding="5dp"
@@ -43,7 +43,7 @@
         <RelativeLayout>
             <TextView
                 android:id="@+id/sixDaysAgo_view"
-                android:layout_width="154dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/warm_grey"
                 android:padding="5dp"
@@ -73,7 +73,7 @@
         <RelativeLayout>
         <TextView
             android:id="@+id/fiveDaysAgo_view"
-            android:layout_width="231dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
@@ -103,7 +103,7 @@
         <RelativeLayout>
             <TextView
                 android:id="@+id/fourDaysAgo_view"
-                android:layout_width="308dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/light_sage"
                 android:padding="5dp"
@@ -133,7 +133,7 @@
         <RelativeLayout>
             <TextView
                 android:id="@+id/threeDaysAgo_view"
-                android:layout_width="385dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/banana_yellow"
                 android:padding="5dp"
@@ -164,8 +164,8 @@
         <RelativeLayout>
             <TextView
                 android:id="@+id/twoDaysAgo_view"
-                android:layout_width="77dp"
                 android:layout_height="match_parent"
+                android:layout_width="wrap_content"
                 android:background="@color/faded_red"
                 android:padding="5dp"
                 android:text="@string/TwoDaysAgo"
@@ -194,8 +194,8 @@
         <RelativeLayout>
         <TextView
             android:id="@+id/yesterday_view"
-            android:layout_width="154dp"
             android:layout_height="match_parent"
+            android:layout_width="wrap_content"
             android:background="@color/cornflower_blue_65"
             android:padding="5dp"
             android:text="@string/Yesterday"
