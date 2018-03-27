@@ -25,6 +25,7 @@ import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * @author jacques
@@ -37,6 +38,8 @@ import java.util.ArrayList;
 @TargetApi(19)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
+    public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
+
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
     /**
@@ -131,25 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int indexMood = mCurrentMood.getMoodIndex();
         mPager.setCurrentItem(indexMood);
-        /*
-        mSmiley.setImageResource(mReferencedMoods.getMoodIcon(indexMood));
-        mSmiley.setBackgroundResource(mReferencedMoods.getMoodColor(indexMood));
-        */
-    }
-
-    public boolean onGenericMotionEvent (MotionEvent event)
-    {
-        int index = mPager.getCurrentItem();
-        if (event.getRawX() > 0 && mPager.getCurrentItem() < NUM_PAGES) {
-            ++index;
-        } else if (event.getRawX() < 0 && mPager.getCurrentItem() > 0) {
-            --index;
-        }
-        mCurrentMood.setMoodIndex(index);
-        mMemo.setMemorisationCurrentIndex(mMoodsMemorized, index);
-        mPager.setCurrentItem(mCurrentMood.getMoodIndex());
-
-        return super.onGenericMotionEvent(event) ;
     }
 
     @Override
@@ -247,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         @Override
         public Fragment getItem(int position) {
-
             return MoodSlideFragment.create(position);
         }
 
@@ -261,4 +244,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return NUM_PAGES;
         }
     }
+
+
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.getInt(BUNDLE_STATE_MOOD_INDEX, mPager.getCurrentItem());
+        super.onSaveInstanceState(outState);
+    }
+
 }
