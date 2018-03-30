@@ -23,13 +23,7 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
     private ImageButton[] mDaysComment = new ImageButton[7];
     private ArrayList<Mood> mWeeklyMoods = new ArrayList<>(7) ;
 
-    private MoodList mReferencedMoods;     // List of the referenced moods
-
-    private SharedPreferences mMoodsMemorized;
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
-    private static String PREFERENCES_KEY_MOODS = "PREFERENCES_KEY_MOODS" ;
-    private static String PREFERENCES_KEY_COMMENT = "PREFERENCES_KEY_COMMENT" ;
-
 
         @SuppressLint("WrongConstant")
     @Override
@@ -70,14 +64,17 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
          0 (today) to 7 (a week ago). But they are used from 0 (a week ago) to
          6 (yesterday).
          */
-        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
-        Memorisation moodsMemory = new Memorisation(mMoodsMemorized) ;
+            SharedPreferences moodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
+            Memorisation moodsMemory = new Memorisation(moodsMemorized);
         for (int i = 0 ; i < 7 ; ++i)
         {
             mWeeklyMoods.add(moodsMemory.getMemorizedMoods().get(6 - i));
-       }
+        }
 
-        mReferencedMoods = new MoodList() ;
+            // Creation of the list of references for the moods
+            MoodList referencedMoods = new MoodList();
+
+            // Loading of the width of the screen to parametrize the width of the moods
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int width0 = metrics.widthPixels / 5;
@@ -86,9 +83,9 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
         for (int i = 0 ; i <7 ; ++i)
         {
             int moodPassed = mWeeklyMoods.get(i).getMoodIndex() ;
-            mDaysMood.get(i).setBackgroundResource(mReferencedMoods.
+            mDaysMood.get(i).setBackgroundResource(referencedMoods.
                     getMoodColor(moodPassed));
-            mDaysMood.get(i).setWidth(mReferencedMoods.getModdSize(moodPassed) * width0);
+            mDaysMood.get(i).setWidth((moodPassed + 1) * width0);
             mDaysMood.get(i).setEnabled(true);
 
             /* Avoid or not the displaying of the button to "toasting" the comment, if

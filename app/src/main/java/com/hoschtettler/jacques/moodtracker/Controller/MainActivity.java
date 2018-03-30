@@ -3,7 +3,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,41 +36,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
 
     private ImageView mMoodScreen0, mMoodScreen1, mMoodScreen2,
-            mMoodScreen3, mMoodScreen4;
+            mMoodScreen3, mMoodScreen4;  // Views of the moods
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
-    /**
-     * The number of pages of moods.
-     */
-    private static final int NUM_PAGES = 5;
 
     private EditText mComment;          // windows where the comment is writing
     private Button mValidateComment;   // valide the writed commment
     private Button mEraseComment;      // erase the writed comment
     private View mComment_Complement; // empty space to fill below the EditText
 
-    /**
-     * Moods of the last seven days.
-     * - index 0 is for the current day ;
-     * - index 1 for the mood of yesterday ;
-     * - index 2 for the mood of the day before yesterday ;
-     * - ...
-     */
-    private ArrayList<Mood> mWeekMood = new ArrayList<>(7);
     private Memorisation mMemo;             //  memorization object
     private Mood mCurrentMood;             // current mood to display and to memorize.
-    private MoodList mReferencedMoods;     // List of the referenced moods
-    private SharedPreferences mMoodsMemorized;
 
-    // Identification of the history activity
-    public static final int HISTORY_ACTIVITY_REQUEST_CODE = 7 ;
-    public static final String HISTORY_MOODS_WEEKLY = "HISTORY_MOODS_WEEKLY" ;
+    // Place where data are memorized
+    private SharedPreferences mMoodsMemorized;
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
+    // Variables for the slide management
     private ImageView mMainSlideView;
     private float mYWhenDown, mSlideSens;
     private int mCurrentPosition;
-
 
     /**
      * Initalization of the display and of the Mood
@@ -105,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
 
+        // Initialization of the data for the slide management
         mYWhenDown = 0.0f;
         mSlideSens = 1.0f;
 
@@ -113,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setTag(1);
         mEraseComment.setTag(2);
         mHistory.setTag(3);
-
-        mReferencedMoods = new MoodList();
 
         mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
 
@@ -194,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (buttonIndex)
         {
             case 0:
+                // Activation of the comment window
                 mComment.bringToFront();
                 mComment.setVisibility(View.VISIBLE);
                 mComment_Complement.bringToFront();
@@ -212,9 +196,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mEraseComment.setEnabled(true);
                 mValidateComment.setEnabled(true);
 
+                // Loading the previous comment, if it exists, and displaying it
                 String tempString = mCurrentMood.getMoodComment();
                 mComment.setText(tempString);
 
+                // Plugging the listener of the comment window
                 mComment.addTextChangedListener(new TextWatcher()
                 {
                   @Override
@@ -238,15 +224,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             break;
 
             case 1 :
+                // Memorisation of the comment
                 tempString = mComment.getText().toString();
                 closeAddComment(tempString);
             break;
 
             case 2 :
+                // Erasing the comment
                 tempString = "" ;
                 closeAddComment(tempString);
             break;
+
             case 3 :
+                // Starting the WeekHistory activity
                 Intent historyActivity = new Intent(MainActivity.this,
                         WeekHistory.class);
                 startActivity(historyActivity);
@@ -254,10 +244,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void closeAddComment(String comment)
-    {
+    /**
+     * Ending the comment managing
+     *
+     * @param comment
+     */
+    private void closeAddComment(String comment) {
+        // Memorisation of the comment
         mCurrentMood.setMoodComment(comment);
         mMemo.setMemorisationCurrentComment(mMoodsMemorized, comment);
+
+        // Deactivation of the comment window
         mComment.setVisibility(View.INVISIBLE);
         mComment.setEnabled(false);
         mComment_Complement.setVisibility(View.INVISIBLE);
@@ -266,11 +263,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEraseComment.setVisibility(View.INVISIBLE);
         mEraseComment.setEnabled(false);
 
+        /* New activation of the buttons for writing a comment, and for activing the
+         week history.
+        */
         mAdd_Comment.setEnabled(true);
         mHistory.setEnabled(true);
     }
 
 
+    /**
+     * Memorisation of the current state of mood, to manage a direction change of the
+     * device.
+     * @param outState
+     */
     protected void onSaveInstanceState(Bundle outState) {
         outState.getInt(BUNDLE_STATE_MOOD_INDEX, mCurrentPosition);
         super.onSaveInstanceState(outState);
