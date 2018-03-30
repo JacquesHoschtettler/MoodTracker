@@ -3,16 +3,14 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,12 +18,10 @@ import android.widget.ImageView;
 
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
 import com.hoschtettler.jacques.moodtracker.Model.MoodList;
-import com.hoschtettler.jacques.moodtracker.Model.MoodSlideFragment;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * @author jacques
@@ -40,23 +36,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
 
+    private ImageView mMoodScreen0, mMoodScreen1, mMoodScreen2,
+            mMoodScreen3, mMoodScreen4;
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
     /**
      * The number of pages of moods.
      */
     private static final int NUM_PAGES = 5;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
-    private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private PagerAdapter mPagerAdapter;
 
     private EditText mComment;          // windows where the comment is writing
     private Button mValidateComment;   // valide the writed commment
@@ -81,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String HISTORY_MOODS_WEEKLY = "HISTORY_MOODS_WEEKLY" ;
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
+    private ImageView mMainSlideView;
+    private float mYWhenDown, mSlideSens;
+    private int mCurrentPosition;
+
 
     /**
      * Initalization of the display and of the Mood
@@ -94,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          setContentView(R.layout.activity_main);
 
         // Plugging the elements of the main screen
+        mMoodScreen0 = (ImageView) findViewById(R.id.mood_0);
+        mMoodScreen1 = (ImageView) findViewById(R.id.mood_1);
+        mMoodScreen2 = (ImageView) findViewById(R.id.mood_2);
+        mMoodScreen3 = (ImageView) findViewById(R.id.mood_3);
+        mMoodScreen4 = (ImageView) findViewById(R.id.mood_4);
+
         mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
         mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
 
@@ -108,10 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.Pager_View);
-        mPagerAdapter = new MoodSlideAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        mYWhenDown = 0.0f;
+        mSlideSens = 1.0f;
 
         //Identifying the pressed button
         mAdd_Comment.setTag(0);
@@ -130,10 +125,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * Else the current mood is the mood memorized with the index 0
          */
         mMemo = new Memorisation(mMoodsMemorized);
-        mCurrentMood = mMemo.initializationOfTheMood(mMoodsMemorized);
+        mCurrentMood = mMemo.initializationOfTheMood();
+        mCurrentPosition = mCurrentMood.getMoodIndex();
+        setCurrentSliderItem(mCurrentPosition);
+    }
 
-        int indexMood = mCurrentMood.getMoodIndex();
-        mPager.setCurrentItem(indexMood);
+    private void setCurrentSliderItem(int position) {
+        switch (mCurrentPosition) {
+            case 0:
+                mMainSlideView = mMoodScreen0;
+                break;
+            case 1:
+                mMainSlideView = mMoodScreen1;
+                break;
+            case 2:
+                mMainSlideView = mMoodScreen2;
+                break;
+            case 3:
+                mMainSlideView = mMoodScreen3;
+                break;
+            case 4:
+                mMainSlideView = mMoodScreen4;
+                break;
+        }
+        mMainSlideView.setVisibility(View.VISIBLE);
+        mMainSlideView.bringToFront();
+        mAdd_Comment.bringToFront();
+        mHistory.bringToFront();
+        mMemo.setMemorisationCurrentIndex(mCurrentPosition);
+        Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,
+                0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, mSlideSens, Animation.RELATIVE_TO_PARENT,
+                0.0f);
+        slide.setDuration(1000);
+        mMainSlideView.startAnimation(slide);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                mYWhenDown = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                if (event.getY() < mYWhenDown) {
+                    mSlideSens = 1.0f;
+                    if (mCurrentPosition < 4) {
+                        setCurrentSliderItem(++mCurrentPosition);
+                    }
+                } else if (event.getY() > mYWhenDown) {
+                    mSlideSens = -1.0f;
+                    if (mCurrentPosition > 0) {
+                        setCurrentSliderItem(--mCurrentPosition);
+                    }
+                }
+                break;
+            default:
+                return super.onTouchEvent(event);
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -143,9 +194,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (buttonIndex)
         {
             case 0:
+                mComment.bringToFront();
                 mComment.setVisibility(View.VISIBLE);
+                mComment_Complement.bringToFront();
                 mComment_Complement.setVisibility(View.VISIBLE);
+                mValidateComment.bringToFront();
                 mValidateComment.setVisibility(View.VISIBLE);
+                mEraseComment.bringToFront();
                 mEraseComment.setVisibility(View.VISIBLE);
 
                 // Avoid a another try of writing a another comment or to go to history
@@ -163,12 +218,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mComment.addTextChangedListener(new TextWatcher()
                 {
                   @Override
-                  public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                  public void beforeTextChanged(CharSequence s, int start, int count,
+                                                int after)
                   {
                   }
 
                   @Override
-                  public void onTextChanged(CharSequence s, int start, int before, int count)
+                  public void onTextChanged(CharSequence s, int start, int before,
+                                            int count)
                   {
                   }
 
@@ -190,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeAddComment(tempString);
             break;
             case 3 :
-                Intent historyActivity = new Intent(MainActivity.this, WeekHistory.class) ;
+                Intent historyActivity = new Intent(MainActivity.this,
+                        WeekHistory.class);
                 startActivity(historyActivity);
             break ;
         }
@@ -212,42 +270,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHistory.setEnabled(true);
     }
 
-    private class MoodSlideAdapter extends FragmentPagerAdapter {
-
-        /**
-         * Default constructor
-         *
-         * @param fragmentManager
-         */
-        public MoodSlideAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        /**
-         * Creating the new view
-         *
-         * @param position
-         * @return
-         */
-        @Override
-        public Fragment getItem(int position) {
-            return MoodSlideFragment.create(position);
-        }
-
-        /**
-         * Return the number of moods
-         *
-         * @return NUM_PAGES
-         */
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-    }
-
 
     protected void onSaveInstanceState(Bundle outState) {
-        outState.getInt(BUNDLE_STATE_MOOD_INDEX, mPager.getCurrentItem());
+        outState.getInt(BUNDLE_STATE_MOOD_INDEX, mCurrentPosition);
         super.onSaveInstanceState(outState);
     }
 

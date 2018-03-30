@@ -8,10 +8,51 @@
     tools:context="com.hoschtettler.jacques.moodtracker.Controller.MainActivity"
     >
 
-    <android.support.v4.view.ViewPager
+    <ImageView
+        android:id="@+id/mood_0"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/Pager_View"/>
+        android:src="@mipmap/smiley_sad"
+        android:padding="100dp"
+        android:background="@color/faded_red"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/mood_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/smiley_disappointed"
+        android:padding="100dp"
+        android:background="@color/warm_grey"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/mood_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/smiley_normal"
+        android:padding="100dp"
+        android:background="@color/cornflower_blue_65"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/mood_3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/smiley_happy"
+        android:padding="100dp"
+        android:background="@color/light_sage"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/mood_4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/smiley_super_happy"
+        android:padding="100dp"
+        android:background="@color/banana_yellow"
+        android:visibility="gone" />
 
 
     <ImageButton
@@ -26,6 +67,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
         android:src="@mipmap/ic_note_add_black"
+        android:visibility="visible"
     />
 
     <ImageButton
@@ -40,6 +82,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:src="@mipmap/ic_history_black"
+        android:visibility="visible"
     />
 
     <EditText

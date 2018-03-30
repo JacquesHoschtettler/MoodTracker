@@ -7,8 +7,8 @@
     <!-- Background colors used for the different moods -->
     <color name="faded_red">#ffde3c50</color>            <!-- very sad -->
     <color name="warm_grey">#ff9b9b9b</color>            <!--  disappointed -->
-    <color name="cornflower_blue_65">#a5468ad9</color>   <!-- normal -->
+    <color name="cornflower_blue_65">#ff468ad9</color>   <!-- normal -->
     <color name="light_sage">#ffb8e986</color>           <!-- happy -->
     <color name="banana_yellow">#fff9ec4f</color>        <!-- very happy -->
-    <color name="light_grey">#dddddd</color>
+    <color name="light_grey">#ffdddddd</color>
 </resources>

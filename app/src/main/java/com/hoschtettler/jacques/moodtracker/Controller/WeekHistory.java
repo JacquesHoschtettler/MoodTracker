@@ -66,12 +66,15 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
             mDaysComment[i].setTag(i) ;
         }
 
-
+        /* Loading the memorized moods of the seven past days. They are memorized from
+         0 (today) to 7 (a week ago). But they are used from 0 (a week ago) to
+         6 (yesterday).
+         */
         mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
         Memorisation moodsMemory = new Memorisation(mMoodsMemorized) ;
         for (int i = 0 ; i < 7 ; ++i)
         {
-            mWeeklyMoods.add(moodsMemory.getMemorizedMoods().get(i));
+            mWeeklyMoods.add(moodsMemory.getMemorizedMoods().get(6 - i));
        }
 
         mReferencedMoods = new MoodList() ;
@@ -83,10 +86,14 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
         for (int i = 0 ; i <7 ; ++i)
         {
             int moodPassed = mWeeklyMoods.get(i).getMoodIndex() ;
-            mDaysMood.get(i).setBackgroundResource(mReferencedMoods.getMoodColor(moodPassed));
+            mDaysMood.get(i).setBackgroundResource(mReferencedMoods.
+                    getMoodColor(moodPassed));
             mDaysMood.get(i).setWidth(mReferencedMoods.getModdSize(moodPassed) * width0);
             mDaysMood.get(i).setEnabled(true);
 
+            /* Avoid or not the displaying of the button to "toasting" the comment, if
+            it exists.
+            */
             if (mWeeklyMoods.get(i).getMoodComment().equals(""))
             {
                 mDaysComment[i].setVisibility(View.INVISIBLE) ;
@@ -103,6 +110,7 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onClick(View v)
         {
+            //Displaying the comment of the choised day.
            String comment = mWeeklyMoods.get((int)v.getTag()).getMoodComment() ;
            Toast.makeText(this, comment, Toast.LENGTH_LONG).show() ;
         }
