@@ -35,11 +35,14 @@ import static android.support.v4.media.AudioAttributesCompat.USAGE_MEDIA;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener
 {
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
+    public static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
 
     private ImageView mMoodScreen0, mMoodScreen1, mMoodScreen2,
             mMoodScreen3, mMoodScreen4;  // Views of the moods
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
+    private ImageButton mSoundOn;      // to put the sound on
+    private ImageButton mSoundOff;     // to put the sound off
 
     private EditText mComment;          // windows where the comment is writing
     private Button mValidateComment;   // valide the writed commment
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Variables for the managing of sound
     private SoundPool mSound;
     private int mSoundId, mResId;
+    private boolean mSoundEnabled;
 
     /**
      * Initalization of the display and of the Mood
@@ -82,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
         mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
+        mSoundOn = (ImageButton) findViewById(R.id.Sound);
+        mSoundOff = (ImageButton) findViewById(R.id.No_sound);
 
         mValidateComment = (Button)         findViewById(R.id.Add_comment_validate_btn);
         mEraseComment    = (Button)         findViewById(R.id.Add_comment_erase_btn);
@@ -93,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHistory.setOnClickListener(this);
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
+        mSoundOn.setOnClickListener(this);
+        mSoundOff.setOnClickListener(this);
 
         // Initialization of the data for the slide management
         mYWhenDown = 0.0f;
@@ -103,15 +111,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mValidateComment.setTag(1);
         mEraseComment.setTag(2);
         mHistory.setTag(3);
+        mSoundOn.setTag(4);
+        mSoundOff.setTag(5);
+
+        // Plugging to the memory space
+        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
+        mMemo = new Memorisation(mMoodsMemorized);
 
         // Initialization of the managing of the sound
         mSound = new SoundPool(1, USAGE_MEDIA, 0);
         mSoundId = 0;
         mResId = 0;
-
-        // Plugging to the memory space
-        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
-        mMemo = new Memorisation(mMoodsMemorized);
+        mSoundEnabled = mMemo.getSoundStatus();
+        if (mSoundEnabled) {
+            mSoundOn.setEnabled(true);
+            mSoundOn.setVisibility(View.VISIBLE);
+            mSoundOff.setEnabled(false);
+            mSoundOff.setVisibility(View.INVISIBLE);
+        } else {
+            mSoundOn.setEnabled(false);
+            mSoundOn.setVisibility(View.INVISIBLE);
+            mSoundOff.setEnabled(true);
+            mSoundOff.setVisibility(View.VISIBLE);
+        }
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -146,6 +168,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMainSlideView.bringToFront();
         mAdd_Comment.bringToFront();
         mHistory.bringToFront();
+        mSoundOn.bringToFront();
+        mSoundOff.bringToFront();
         mMemo.setMemorisationCurrentIndex(mCurrentPosition);
         Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,
                 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
@@ -154,15 +178,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         slide.setDuration(1000);
 
         // Managing the sound correlate with the change of slide
-        mSound.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                mSound.play(mSoundId, 1.0f, 1.0f, 10,
-                        0, 1.0f);
+        if (mSoundEnabled) {
+            mSound.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                    mSound.play(mSoundId, 1.0f, 1.0f, 10,
+                            0, 1.0f);
+                }
+            });
+            if (mResId != 0) {
+                mSoundId = mSound.load(MainActivity.this, mResId, 1);
             }
-        });
-        if (mResId != 0) {
-            mSoundId = mSound.load(MainActivity.this, mResId, 1);
         }
 
         // Launching the sliding
@@ -180,23 +206,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getY() < mYWhenDown) {
                     mSlideSens = 1.0f;
                     if (mCurrentPosition < 4) {
+                        // Only if the sound is on
+                        if (mSoundEnabled)
                         // Choice of the sound correlate with the upside change of mood
-                        switch (mCurrentPosition) {
-                            case 0:
-                                mResId = R.raw.up00;
-                                break;
-                            case 1:
-                                mResId = R.raw.up01;
-                                break;
-                            case 2:
-                                mResId = R.raw.up02;
-                                break;
-                            case 3:
-                                mResId = R.raw.up03;
-                                break;
-                            default:
-                                ;
-                                break;
+                        {
+                            switch (mCurrentPosition) {
+                                case 0:
+                                    mResId = R.raw.up00;
+                                    break;
+                                case 1:
+                                    mResId = R.raw.up01;
+                                    break;
+                                case 2:
+                                    mResId = R.raw.up02;
+                                    break;
+                                case 3:
+                                    mResId = R.raw.up03;
+                                    break;
+                                default:
+                                    ;
+                                    break;
+                            }
                         }
                         // Realization of the upside change of slide
                         setCurrentSliderItem(++mCurrentPosition);
@@ -204,23 +234,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (event.getY() > mYWhenDown) {
                     mSlideSens = -1.0f;
                     if (mCurrentPosition > 0) {
-                        // Choice of the sound correlate with the downside change of mood
-                        switch (mCurrentPosition) {
-                            case 1:
-                                mResId = R.raw.down00;
-                                break;
-                            case 2:
-                                mResId = R.raw.down01;
-                                break;
-                            case 3:
-                                mResId = R.raw.down02;
-                                break;
-                            case 4:
-                                mResId = R.raw.down03;
-                                break;
-                            default:
-                                ;
-                                break;
+                        // Only if the sound is on
+                        if (mSoundEnabled) {
+                            // Choice of the sound correlate with the downside change of mood
+                            switch (mCurrentPosition) {
+                                case 1:
+                                    mResId = R.raw.down00;
+                                    break;
+                                case 2:
+                                    mResId = R.raw.down01;
+                                    break;
+                                case 3:
+                                    mResId = R.raw.down02;
+                                    break;
+                                case 4:
+                                    mResId = R.raw.down03;
+                                    break;
+                                default:
+                                    ;
+                                    break;
+                            }
                         }
                         // Realization of the downside change of slide
                         setCurrentSliderItem(--mCurrentPosition);
@@ -304,6 +337,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         WeekHistory.class);
                 startActivity(historyActivity);
             break ;
+            case 4:
+                // Putting off the sound
+                mSoundEnabled = false;
+                soundButtonEnabled(false);
+                mMemo.setSoundStatus(false);
+                break;
+            case 5:
+                //Putting on the sound
+                mSoundEnabled = true;
+                soundButtonEnabled(true);
+                mMemo.setSoundStatus(true);
+                break;
         }
     }
 
@@ -315,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void closeAddComment(String comment) {
         // Memorisation of the comment
         mCurrentMood.setMoodComment(comment);
-        mMemo.setMemorisationCurrentComment(mMoodsMemorized, comment);
+        mMemo.setMemorisationCurrentComment(comment);
 
         // Deactivation of the comment window
         mComment.setVisibility(View.INVISIBLE);
@@ -333,6 +378,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHistory.setEnabled(true);
     }
 
+    /**
+     * Managing the sound buttons when the sound is on or off
+     */
+    private void soundButtonEnabled(boolean soundEnabled) {
+        if (soundEnabled) {
+            mSoundOn.setVisibility(View.VISIBLE);
+            mSoundOn.setEnabled(true);
+            mSoundOff.setVisibility(View.INVISIBLE);
+            mSoundOff.setEnabled(false);
+        } else {
+            mSoundOn.setVisibility(View.INVISIBLE);
+            mSoundOn.setEnabled(false);
+            mSoundOff.setVisibility(View.VISIBLE);
+            mSoundOff.setEnabled(true);
+        }
+    }
 
     /**
      * Memorisation of the current state of mood, to manage a direction change of the
@@ -341,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     protected void onSaveInstanceState(Bundle outState) {
         outState.getInt(BUNDLE_STATE_MOOD_INDEX, mCurrentPosition);
+        outState.getBoolean(BUNDLE_STATE_SOUND_ON, mSoundEnabled);
         super.onSaveInstanceState(outState);
     }
 
