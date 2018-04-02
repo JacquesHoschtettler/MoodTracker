@@ -2,6 +2,7 @@ package com.hoschtettler.jacques.moodtracker.Controller;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,11 +17,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
-import com.hoschtettler.jacques.moodtracker.Model.MoodList;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 
-import java.util.ArrayList;
+import static android.support.v4.media.AudioAttributesCompat.USAGE_MEDIA;
+
 
 /**
  * @author jacques
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  */
 // This app must be usable with the Kitkat level (Android 4.4)
 @TargetApi(19)
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener
 {
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
 
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mMainSlideView;
     private float mYWhenDown, mSlideSens;
     private int mCurrentPosition;
+
+    // Variables for the managing of sound
+    private SoundPool mSound;
+    private int mSoundId, mResId;
 
     /**
      * Initalization of the display and of the Mood
@@ -91,15 +96,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Initialization of the data for the slide management
         mYWhenDown = 0.0f;
-        mSlideSens = 1.0f;
+        mSlideSens = 0.0f;
 
-        //Identifying the pressed button
+        // Identifying the pressed button
         mAdd_Comment.setTag(0);
         mValidateComment.setTag(1);
         mEraseComment.setTag(2);
         mHistory.setTag(3);
 
+        // Initialization of the managing of the sound
+        mSound = new SoundPool(1, USAGE_MEDIA, 0);
+        mSoundId = 0;
+        mResId = 0;
+
+        // Plugging to the memory space
         mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
+        mMemo = new Memorisation(mMoodsMemorized);
 
         /** Initialization of the current mood
          * If the current day is tomorrow(or later) relative to the memorized day,
@@ -107,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * fifth become the sixth, etc.
          * Else the current mood is the mood memorized with the index 0
          */
-        mMemo = new Memorisation(mMoodsMemorized);
         mCurrentMood = mMemo.initializationOfTheMood();
         mCurrentPosition = mCurrentMood.getMoodIndex();
         setCurrentSliderItem(mCurrentPosition);
@@ -141,6 +152,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Animation.RELATIVE_TO_PARENT, mSlideSens, Animation.RELATIVE_TO_PARENT,
                 0.0f);
         slide.setDuration(1000);
+
+        // Managing the sound correlate with the change of slide
+        mSound.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                mSound.play(mSoundId, 1.0f, 1.0f, 10,
+                        0, 1.0f);
+            }
+        });
+        if (mResId != 0) {
+            mSoundId = mSound.load(MainActivity.this, mResId, 1);
+        }
+
+        // Launching the sliding
         mMainSlideView.startAnimation(slide);
     }
 
@@ -155,11 +180,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getY() < mYWhenDown) {
                     mSlideSens = 1.0f;
                     if (mCurrentPosition < 4) {
+                        // Choice of the sound correlate with the upside change of mood
+                        switch (mCurrentPosition) {
+                            case 0:
+                                mResId = R.raw.up00;
+                                break;
+                            case 1:
+                                mResId = R.raw.up01;
+                                break;
+                            case 2:
+                                mResId = R.raw.up02;
+                                break;
+                            case 3:
+                                mResId = R.raw.up03;
+                                break;
+                            default:
+                                ;
+                                break;
+                        }
+                        // Realization of the upside change of slide
                         setCurrentSliderItem(++mCurrentPosition);
                     }
                 } else if (event.getY() > mYWhenDown) {
                     mSlideSens = -1.0f;
                     if (mCurrentPosition > 0) {
+                        // Choice of the sound correlate with the downside change of mood
+                        switch (mCurrentPosition) {
+                            case 1:
+                                mResId = R.raw.down00;
+                                break;
+                            case 2:
+                                mResId = R.raw.down01;
+                                break;
+                            case 3:
+                                mResId = R.raw.down02;
+                                break;
+                            case 4:
+                                mResId = R.raw.down03;
+                                break;
+                            default:
+                                ;
+                                break;
+                        }
+                        // Realization of the downside change of slide
                         setCurrentSliderItem(--mCurrentPosition);
                     }
                 }
@@ -281,4 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+    }
 }
