@@ -1,6 +1,5 @@
 package com.hoschtettler.jacques.moodtracker.Controller;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +16,8 @@ import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
 
+import static com.hoschtettler.jacques.moodtracker.Model.MoodList.NUMBER_MOOD;
+
 public class WeekHistory extends AppCompatActivity implements View.OnClickListener
     {
     private ArrayList<TextView> mDaysMood = new ArrayList<>(7) ;
@@ -25,7 +26,6 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
 
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
-        @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState)
         {
@@ -74,10 +74,12 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
             // Creation of the list of references for the moods
             MoodList referencedMoods = new MoodList();
 
-            // Loading of the width of the screen to parametrize the width of the moods
+            // Loading of the width and the heigth of the screen to parametrize
+            // the width and the height of the moods
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int width0 = metrics.widthPixels / 5;
+            int width0 = metrics.widthPixels / NUMBER_MOOD;
+            int height0 = metrics.heightPixels / 7;
 
         // Initialisation of the moods
         for (int i = 0 ; i <7 ; ++i)
@@ -86,6 +88,7 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
             mDaysMood.get(i).setBackgroundResource(referencedMoods.
                     getMoodColor(moodPassed));
             mDaysMood.get(i).setWidth((moodPassed + 1) * width0);
+            mDaysMood.get(i).setHeight(height0);
             mDaysMood.get(i).setEnabled(true);
 
             /* Avoid or not the displaying of the button to "toasting" the comment, if

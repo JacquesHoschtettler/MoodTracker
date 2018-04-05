@@ -16,4 +16,14 @@
     <string name="Width4">308</string>
     <string name="Width5">385</string>
     <string name="Padding">15dp</string>
+    <string name="SadMood">Sad mood</string>
+    <string name="DisappointedMood">Disappointed mood </string>
+    <string name="NormalMood">Normal mood</string>
+    <string name="HappyMood">Happy mood</string>
+    <string name="VeryHappyMood">Very happy mood</string>
+    <string name="SoundOn">Sound on button</string>
+    <string name="SoundOff">Sound off button</string>
+    <string name="AddComment">Adding a comment</string>
+    <string name="MoodHistory">To the history of moods</string>
+
 </resources>

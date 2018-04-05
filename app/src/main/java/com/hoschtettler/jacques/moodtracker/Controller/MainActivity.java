@@ -17,10 +17,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.hoschtettler.jacques.moodtracker.Model.Mood;
+import com.hoschtettler.jacques.moodtracker.Model.MoodList;
 import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 
+import java.util.ArrayList;
+
 import static android.support.v4.media.AudioAttributesCompat.USAGE_MEDIA;
+import static com.hoschtettler.jacques.moodtracker.Model.MoodList.NUMBER_MOOD;
 
 
 /**
@@ -37,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
     public static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
 
-    private ImageView mMoodScreen0, mMoodScreen1, mMoodScreen2,
-            mMoodScreen3, mMoodScreen4;  // Views of the moods
+    private ArrayList<ImageView> mMoodScreen;  // Views of the moods
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
     private ImageButton mSoundOn;      // to put the sound on
@@ -52,12 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Memorisation mMemo;             //  memorization object
     private Mood mCurrentMood;             // current mood to display and to memorize.
 
-    // Place where data are memorized
-    private SharedPreferences mMoodsMemorized;
     public static final String NAME_FILE_MEMORISATION = "MoodTracker_Memory" ;
 
-    // Variables for the slide management
-    private ImageView mMainSlideView;
+    private MoodList mMoodsPossible;
+
     private float mYWhenDown, mSlideSens;
     private int mCurrentPosition;
 
@@ -74,15 +75,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mMoodsPossible = new MoodList();
 
         // Plugging the elements of the main screen
-        mMoodScreen0 = (ImageView) findViewById(R.id.mood_0);
-        mMoodScreen1 = (ImageView) findViewById(R.id.mood_1);
-        mMoodScreen2 = (ImageView) findViewById(R.id.mood_2);
-        mMoodScreen3 = (ImageView) findViewById(R.id.mood_3);
-        mMoodScreen4 = (ImageView) findViewById(R.id.mood_4);
+        mMoodScreen = new ArrayList<>();
+        for (int i = 0; i < NUMBER_MOOD; ++i) {
+            mMoodScreen.add((ImageView) findViewById(mMoodsPossible.getMoodId(i)));
+        }
 
         mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
         mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
@@ -115,31 +118,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSoundOff.setTag(5);
 
         // Plugging to the memory space
-        mMoodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
-        mMemo = new Memorisation(mMoodsMemorized);
+        SharedPreferences moodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
+        mMemo = new Memorisation(moodsMemorized);
 
         // Initialization of the managing of the sound
         mSound = new SoundPool(1, USAGE_MEDIA, 0);
         mSoundId = 0;
         mResId = 0;
         mSoundEnabled = mMemo.getSoundStatus();
-        if (mSoundEnabled) {
-            mSoundOn.setEnabled(true);
-            mSoundOn.setVisibility(View.VISIBLE);
-            mSoundOff.setEnabled(false);
-            mSoundOff.setVisibility(View.INVISIBLE);
-        } else {
-            mSoundOn.setEnabled(false);
-            mSoundOn.setVisibility(View.INVISIBLE);
-            mSoundOff.setEnabled(true);
-            mSoundOff.setVisibility(View.VISIBLE);
-        }
+        soundButtonEnabled(mSoundEnabled);
+        mSoundOff.setVisibility(View.VISIBLE);
 
-        /** Initialization of the current mood
-         * If the current day is tomorrow(or later) relative to the memorized day,
-         * the moods are shifted of a day (the sixth day become the seventh, the
-         * fifth become the sixth, etc.
-         * Else the current mood is the mood memorized with the index 0
+        /* Initialization of the current mood
+          If the current day is tomorrow(or later) relative to the memorized day,
+          the moods are shifted of a day (the sixth day become the seventh, the
+          fifth become the sixth, etc. and the current mood is shift to the happy mood.
+          Else the current mood is the mood memorized.
          */
         mCurrentMood = mMemo.initializationOfTheMood();
         mCurrentPosition = mCurrentMood.getMoodIndex();
@@ -147,25 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setCurrentSliderItem(int position) {
-        switch (mCurrentPosition) {
-            case 0:
-                mMainSlideView = mMoodScreen0;
-                break;
-            case 1:
-                mMainSlideView = mMoodScreen1;
-                break;
-            case 2:
-                mMainSlideView = mMoodScreen2;
-                break;
-            case 3:
-                mMainSlideView = mMoodScreen3;
-                break;
-            case 4:
-                mMainSlideView = mMoodScreen4;
-                break;
-        }
-        mMainSlideView.setVisibility(View.VISIBLE);
-        mMainSlideView.bringToFront();
+        ImageView mainSlideView = mMoodScreen.get(mCurrentPosition);
+
+        mainSlideView.setVisibility(View.VISIBLE);
+        mainSlideView.bringToFront();
         mAdd_Comment.bringToFront();
         mHistory.bringToFront();
         mSoundOn.bringToFront();
@@ -192,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // Launching the sliding
-        mMainSlideView.startAnimation(slide);
+        mainSlideView.startAnimation(slide);
     }
 
     @Override
@@ -205,28 +184,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case MotionEvent.ACTION_UP:
                 if (event.getY() < mYWhenDown) {
                     mSlideSens = 1.0f;
-                    if (mCurrentPosition < 4) {
+                    if (mCurrentPosition < NUMBER_MOOD - 1) {
                         // Only if the sound is on
                         if (mSoundEnabled)
                         // Choice of the sound correlate with the upside change of mood
                         {
-                            switch (mCurrentPosition) {
-                                case 0:
-                                    mResId = R.raw.up00;
-                                    break;
-                                case 1:
-                                    mResId = R.raw.up01;
-                                    break;
-                                case 2:
-                                    mResId = R.raw.up02;
-                                    break;
-                                case 3:
-                                    mResId = R.raw.up03;
-                                    break;
-                                default:
-                                    ;
-                                    break;
-                            }
+                            mResId = mMoodsPossible.getMoodSoundUp(mCurrentPosition);
+
                         }
                         // Realization of the upside change of slide
                         setCurrentSliderItem(++mCurrentPosition);
@@ -237,23 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // Only if the sound is on
                         if (mSoundEnabled) {
                             // Choice of the sound correlate with the downside change of mood
-                            switch (mCurrentPosition) {
-                                case 1:
-                                    mResId = R.raw.down00;
-                                    break;
-                                case 2:
-                                    mResId = R.raw.down01;
-                                    break;
-                                case 3:
-                                    mResId = R.raw.down02;
-                                    break;
-                                case 4:
-                                    mResId = R.raw.down03;
-                                    break;
-                                default:
-                                    ;
-                                    break;
-                            }
+                            mResId = mMoodsPossible.getMoodSoundDowm(mCurrentPosition);
                         }
                         // Realization of the downside change of slide
                         setCurrentSliderItem(--mCurrentPosition);
