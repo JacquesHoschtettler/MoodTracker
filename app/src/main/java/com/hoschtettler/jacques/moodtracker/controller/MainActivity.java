@@ -1,4 +1,5 @@
 package com.hoschtettler.jacques.moodtracker.controller;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.model.Mood;
 import com.hoschtettler.jacques.moodtracker.model.MoodList;
 import com.hoschtettler.jacques.moodtracker.model.Tools.Memorisation;
-import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,8 @@ import static com.hoschtettler.jacques.moodtracker.model.MoodList.NUMBER_MOOD;
  */
 // This app must be usable with the Kitkat level (Android 4.4)
 @TargetApi(19)
-public class mainactivity extends AppCompatActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener
+public class MainActivity extends AppCompatActivity
+        implements View.OnClickListener, SoundPool.OnLoadCompleteListener
 {
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
     public static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
@@ -136,18 +138,21 @@ public class mainactivity extends AppCompatActivity implements View.OnClickListe
          */
         mCurrentMood = mMemo.initializationOfTheMood();
         mCurrentPosition = mCurrentMood.getMoodIndex();
-        setCurrentSliderItem(mCurrentPosition);
+        setCurrentSliderItem();
     }
 
-    private void setCurrentSliderItem(int position) {
+    private void setCurrentSliderItem() {
         ImageView mainSlideView = mMoodScreen.get(mCurrentPosition);
 
+        // Display the current view with all the buttons
         mainSlideView.setVisibility(View.VISIBLE);
         mainSlideView.bringToFront();
         mAdd_Comment.bringToFront();
         mHistory.bringToFront();
         mSoundOn.bringToFront();
         mSoundOff.bringToFront();
+
+        // Preparing the view
         mMemo.setMemorisationCurrentIndex(mCurrentPosition);
         Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,
                 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
@@ -165,7 +170,7 @@ public class mainactivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             if (mResId != 0) {
-                mSoundId = mSound.load(mainactivity.this, mResId, 1);
+                mSoundId = mSound.load(MainActivity.this, mResId, 1);
             }
         }
 
@@ -192,7 +197,8 @@ public class mainactivity extends AppCompatActivity implements View.OnClickListe
 
                         }
                         // Realization of the upside change of slide
-                        setCurrentSliderItem(++mCurrentPosition);
+                        ++mCurrentPosition;
+                        setCurrentSliderItem();
                     }
                 } else if (event.getY() > mYWhenDown) {
                     mSlideSens = -1.0f;
@@ -203,7 +209,8 @@ public class mainactivity extends AppCompatActivity implements View.OnClickListe
                             mResId = mMoodsPossible.getMoodSoundDowm(mCurrentPosition);
                         }
                         // Realization of the downside change of slide
-                        setCurrentSliderItem(--mCurrentPosition);
+                        --mCurrentPosition;
+                        setCurrentSliderItem();
                     }
                 }
                 break;
@@ -280,7 +287,7 @@ public class mainactivity extends AppCompatActivity implements View.OnClickListe
 
             case 3 :
                 // Starting the WeekHistory activity
-                Intent historyActivity = new Intent(mainactivity.this,
+                Intent historyActivity = new Intent(MainActivity.this,
                         WeekHistory.class);
                 startActivity(historyActivity);
             break ;

@@ -2,18 +2,18 @@ package com.hoschtettler.jacques.moodtracker.controller;
 
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hoschtettler.jacques.moodtracker.R;
 import com.hoschtettler.jacques.moodtracker.model.Mood;
 import com.hoschtettler.jacques.moodtracker.model.MoodList;
 import com.hoschtettler.jacques.moodtracker.model.Tools.Memorisation;
-import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
 
