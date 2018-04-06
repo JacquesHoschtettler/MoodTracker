@@ -1,4 +1,4 @@
-package com.hoschtettler.jacques.moodtracker.Controller;
+package com.hoschtettler.jacques.moodtracker.controller;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,15 +16,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.hoschtettler.jacques.moodtracker.Model.Mood;
-import com.hoschtettler.jacques.moodtracker.Model.MoodList;
-import com.hoschtettler.jacques.moodtracker.Model.Tools.Memorisation;
+import com.hoschtettler.jacques.moodtracker.model.Mood;
+import com.hoschtettler.jacques.moodtracker.model.MoodList;
+import com.hoschtettler.jacques.moodtracker.model.Tools.Memorisation;
 import com.hoschtettler.jacques.moodtracker.R;
 
 import java.util.ArrayList;
 
 import static android.support.v4.media.AudioAttributesCompat.USAGE_MEDIA;
-import static com.hoschtettler.jacques.moodtracker.Model.MoodList.NUMBER_MOOD;
+import static com.hoschtettler.jacques.moodtracker.model.MoodList.NUMBER_MOOD;
 
 
 /**
@@ -36,7 +36,7 @@ import static com.hoschtettler.jacques.moodtracker.Model.MoodList.NUMBER_MOOD;
  */
 // This app must be usable with the Kitkat level (Android 4.4)
 @TargetApi(19)
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener
+public class mainactivity extends AppCompatActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener
 {
     public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
     public static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
@@ -87,15 +87,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mMoodScreen.add((ImageView) findViewById(mMoodsPossible.getMoodId(i)));
         }
 
-        mAdd_Comment     = (ImageButton)    findViewById(R.id.Add_comment);
-        mHistory         = (ImageButton)    findViewById(R.id.Show_mood_week);
-        mSoundOn = (ImageButton) findViewById(R.id.Sound);
-        mSoundOff = (ImageButton) findViewById(R.id.No_sound);
+        mAdd_Comment = findViewById(R.id.Add_comment);
+        mHistory = findViewById(R.id.Show_mood_week);
+        mSoundOn = findViewById(R.id.Sound);
+        mSoundOff = findViewById(R.id.No_sound);
 
-        mValidateComment = (Button)         findViewById(R.id.Add_comment_validate_btn);
-        mEraseComment    = (Button)         findViewById(R.id.Add_comment_erase_btn);
-        mComment         = (EditText)       findViewById(R.id.Add_comment_view);
-        mComment_Complement = (View)        findViewById(R.id.Add_comment_complement);
+        mValidateComment = findViewById(R.id.Add_comment_validate_btn);
+        mEraseComment = findViewById(R.id.Add_comment_erase_btn);
+        mComment = findViewById(R.id.Add_comment_view);
+        mComment_Complement = findViewById(R.id.Add_comment_complement);
 
         // Set the interactives objects on listening position
         mAdd_Comment.setOnClickListener(this);
@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mResId = 0;
         mSoundEnabled = mMemo.getSoundStatus();
         soundButtonEnabled(mSoundEnabled);
-        mSoundOff.setVisibility(View.VISIBLE);
 
         /* Initialization of the current mood
           If the current day is tomorrow(or later) relative to the memorized day,
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             if (mResId != 0) {
-                mSoundId = mSound.load(MainActivity.this, mResId, 1);
+                mSoundId = mSound.load(mainactivity.this, mResId, 1);
             }
         }
 
@@ -281,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case 3 :
                 // Starting the WeekHistory activity
-                Intent historyActivity = new Intent(MainActivity.this,
+                Intent historyActivity = new Intent(mainactivity.this,
                         WeekHistory.class);
                 startActivity(historyActivity);
             break ;

@@ -9,16 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        android:min
-        <activity android:name=".Controller.MainActivity">
+        <activity android:name=".controller.mainactivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Model.Tools.Memorisation" />
-        <activity android:name=".Controller.WeekHistory" />
+        <activity android:name=".model.Tools.Memorisation" />
+        <activity android:name=".controller.WeekHistory" />
     </application>
-
 </manifest>

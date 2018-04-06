@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/light_grey"
+    android:weightSum="7"
+    android:orientation="vertical"
     >
 
-<!--    Displays the moods on a week ago -->
-    <TextView
+    <!--    Displays the moods on a week ago -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
         android:id="@+id/sevenDaysAgo_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:width="76dp"
+            android:layout_height="match_parent"
         android:background="@color/faded_red"
         android:padding="5dp"
         android:text="@string/SevenDaysAgo"
@@ -19,29 +27,33 @@
         android:textSize="15sp" />
 
     <ImageButton
-        android:contentDescription="@string/SevenDaysAgo"
         android:id="@+id/sevenDaysComment_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/sevenDaysAgo_view"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/SevenDaysAgo"
         android:layout_alignEnd="@id/sevenDaysAgo_view"
         android:layout_alignRight="@id/sevenDaysAgo_view"
-        android:visibility="visible"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
         android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        android:background="@color/transparent"
+        android:visibility="visible" />
+    </RelativeLayout>
 
-<!--    Displays the moods on six days ago -->
-    <TextView
+    <!--    Displays the moods on six days ago -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
         android:id="@+id/sixDaysAgo_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sevenDaysAgo_view"
         android:width="152dp"
+            android:layout_height="match_parent"
         android:background="@color/warm_grey"
         android:padding="5dp"
         android:text="@string/SixDaysAgo"
@@ -49,120 +61,135 @@
         android:textSize="15sp" />
 
     <ImageButton
-        android:contentDescription="@string/SixDaysAgo"
         android:id="@+id/sixDaysComment_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/sixDaysAgo_view"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/SixDaysAgo"
         android:layout_alignEnd="@id/sixDaysAgo_view"
         android:layout_alignRight="@id/sixDaysAgo_view"
-        android:visibility="visible"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
         android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        android:background="@color/transparent"
+        android:visibility="visible" />
+    </RelativeLayout>
 
     <!--    Displays the moods on five days ago -->
-    <TextView
-        android:id="@+id/fiveDaysAgo_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sixDaysAgo_view"
-        android:width="228dp"
-        android:background="@color/cornflower_blue_65"
-        android:padding="5dp"
-        android:text="@string/FiveDaysAgo"
-        android:textColor="@android:color/black"
-        android:textSize="15sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:contentDescription="@string/FiveDaysAgo"
-        android:id="@+id/fiveDaysComment_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/fiveDaysAgo_view"
-        android:layout_alignEnd="@id/fiveDaysAgo_view"
-        android:layout_alignRight="@id/fiveDaysAgo_view"
-        android:visibility="visible"
-        android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/fiveDaysAgo_view"
+            android:layout_width="wrap_content"
+            android:width="228dp"
+            android:layout_height="match_parent"
+            android:background="@color/cornflower_blue_65"
+            android:padding="5dp"
+            android:text="@string/FiveDaysAgo"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:id="@+id/fiveDaysComment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/FiveDaysAgo"
+            android:layout_alignEnd="@id/fiveDaysAgo_view"
+            android:layout_alignRight="@id/fiveDaysAgo_view"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/transparent"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <!--    Displays the moods on four days ago -->
-    <TextView
-        android:id="@+id/fourDaysAgo_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fiveDaysAgo_view"
-        android:width="304dp"
-        android:background="@color/light_sage"
-        android:padding="5dp"
-        android:text="@string/FourDaysAgo"
-        android:textColor="@android:color/black"
-        android:textSize="15sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:contentDescription="@string/FourDaysAgo"
-        android:id="@+id/fourDaysComment_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/fourDaysAgo_view"
-        android:layout_alignEnd="@id/fourDaysAgo_view"
-        android:layout_alignRight="@id/fourDaysAgo_view"
-        android:visibility="visible"
-        android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/fourDaysAgo_view"
+            android:layout_width="wrap_content"
+            android:width="304dp"
+            android:layout_height="match_parent"
+            android:background="@color/light_sage"
+            android:padding="5dp"
+            android:text="@string/FourDaysAgo"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
 
+        <ImageButton
+            android:id="@+id/fourDaysComment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/FourDaysAgo"
+            android:layout_alignEnd="@id/fourDaysAgo_view"
+            android:layout_alignRight="@id/fourDaysAgo_view"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/transparent"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <!--    Displays the moods on three days ago -->
-    <TextView
-        android:id="@+id/threeDaysAgo_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fourDaysAgo_view"
-        android:width="380dp"
-        android:background="@color/banana_yellow"
-        android:padding="5dp"
-        android:text="@string/ThreeDaysAgo"
-        android:textColor="@android:color/black"
-        android:textSize="15sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:contentDescription="@string/ThreeDaysAgo"
-        android:id="@+id/threeDaysComment_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/threeDaysAgo_view"
-        android:layout_alignEnd="@id/threeDaysAgo_view"
-        android:layout_alignRight="@id/threeDaysAgo_view"
-        android:visibility="visible"
-        android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/threeDaysAgo_view"
+            android:layout_width="wrap_content"
+            android:width="380dp"
+            android:layout_height="match_parent"
+            android:background="@color/banana_yellow"
+            android:padding="5dp"
+            android:text="@string/ThreeDaysAgo"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
 
-<!--    Displays the moods on two days ago -->
-    <TextView
+        <ImageButton
+            android:id="@+id/threeDaysComment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/ThreeDaysAgo"
+            android:layout_alignEnd="@id/threeDaysAgo_view"
+            android:layout_alignRight="@id/threeDaysAgo_view"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/transparent"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <!--    Displays the moods on two days ago -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
         android:id="@+id/twoDaysAgo_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:width="76dp"
-        android:layout_below="@id/threeDaysAgo_view"
+            android:layout_height="match_parent"
         android:background="@color/faded_red"
         android:padding="5dp"
         android:text="@string/TwoDaysAgo"
@@ -170,50 +197,54 @@
         android:textSize="15sp" />
 
     <ImageButton
-        android:contentDescription="@string/TwoDaysAgo"
         android:id="@+id/twoDaysComment_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingStart="30dp"
-        android:layout_alignTop="@id/twoDaysAgo_view"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/TwoDaysAgo"
         android:layout_alignEnd="@id/twoDaysAgo_view"
         android:layout_alignRight="@id/twoDaysAgo_view"
-        android:visibility="visible"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
         android:src="@mipmap/ic_comment_black_48px"
-        android:background="@color/transparent" />
+        android:background="@color/transparent"
+        android:visibility="visible" />
+    </RelativeLayout>
 
     <!--    Displays the moods on yesterday -->
-    <TextView
-        android:id="@+id/yesterday_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/twoDaysAgo_view"
-        android:width="152dp"
-        android:background="@color/warm_grey"
-        android:padding="5dp"
-        android:text="@string/Yesterday"
-        android:textColor="@android:color/black"
-        android:textSize="15sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:id="@+id/yesterdayComment_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/yesterday_view"
-        android:layout_alignRight="@+id/yesterday_view"
-        android:layout_alignTop="@+id/yesterday_view"
-        android:background="@color/transparent"
-        android:contentDescription="@string/Yesterday"
-        android:paddingEnd="20dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="20dp"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:src="@mipmap/ic_comment_black_48px"
-        android:visibility="visible" />
+        <TextView
+            android:id="@+id/yesterday_view"
+            android:layout_width="wrap_content"
+            android:width="152dp"
+            android:layout_height="match_parent"
+            android:background="@color/warm_grey"
+            android:padding="5dp"
+            android:text="@string/Yesterday"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
 
+        <ImageButton
+            android:id="@+id/yesterdayComment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/Yesterday"
+            android:layout_alignEnd="@id/yesterday_view"
+            android:layout_alignRight="@id/yesterday_view"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_comment_black_48px"
+            android:background="@color/transparent"
+            android:visibility="visible" />
 </RelativeLayout>
+
+</LinearLayout>
