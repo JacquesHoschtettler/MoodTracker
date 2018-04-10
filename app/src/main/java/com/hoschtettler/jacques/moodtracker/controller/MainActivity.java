@@ -40,8 +40,8 @@ import static com.hoschtettler.jacques.moodtracker.model.MoodList.NUMBER_MOOD;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener, SoundPool.OnLoadCompleteListener
 {
-    public static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
-    public static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
+    private static final String BUNDLE_STATE_MOOD_INDEX = "currentMoodIndex";
+    private static final String BUNDLE_STATE_SOUND_ON = "soundEnabled";
 
     private ArrayList<ImageView> mMoodScreen;  // Views of the moods
     private ImageButton mAdd_Comment;  // access to writing a comment.
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

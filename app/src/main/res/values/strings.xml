@@ -25,5 +25,9 @@
     <string name="SoundOff">Sound off button</string>
     <string name="AddComment">Adding a comment</string>
     <string name="MoodHistory">To the history of moods</string>
+    <string name="Statistics">Statistiques</string>
+
+    <string name="title_activity_statistics">Statistics</string>
+    <string name="_50">50</string>
 
 </resources>

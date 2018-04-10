@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/light_grey"
@@ -246,5 +245,16 @@
             android:background="@color/transparent"
             android:visibility="visible" />
 </RelativeLayout>
+
+    <Button
+        android:id="@+id/statistics_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="@string/Statistics" />
 
 </LinearLayout>
