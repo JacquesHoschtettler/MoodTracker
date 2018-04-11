@@ -36,11 +36,6 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_history);
-        try {
-            this.getActionBar().hide();
-        } catch (NullPointerException event) {
-            System.out.println("ActionBar problem in WeekHistory");
-        }
 
         // Plugging the elements of the history display
         mDaysMood.add((TextView) findViewById(R.id.sevenDaysAgo_view)) ;
@@ -122,7 +117,7 @@ public class WeekHistory extends AppCompatActivity implements View.OnClickListen
                     Statistics.class);
             startActivity(statisticActivity);
         } else {
-            //Displaying the comment of the choised day.
+            //Displaying the comment of the selected day.
             String comment = mWeeklyMoods.get((int) v.getTag()).getMoodComment();
             Toast.makeText(this, comment, Toast.LENGTH_LONG).show();
         }

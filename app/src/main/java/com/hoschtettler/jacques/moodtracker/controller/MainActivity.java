@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity
         mSoundOff.setTag(5);
 
         // Plugging to the memory space
-        SharedPreferences moodsMemorized = getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
+        SharedPreferences moodsMemorized =
+                getSharedPreferences(NAME_FILE_MEMORISATION, MODE_PRIVATE);
         mMemo = new Memorisation(moodsMemorized);
 
         // Initialization of the managing of the sound

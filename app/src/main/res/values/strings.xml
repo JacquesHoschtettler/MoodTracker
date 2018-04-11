@@ -28,6 +28,7 @@
     <string name="Statistics">Statistiques</string>
 
     <string name="title_activity_statistics">Statistics</string>
-    <string name="_50">50</string>
+    <string name="AllDays">Nombre total de jours :</string>
+
 
 </resources>
