@@ -4,10 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.EventLog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 
 import static com.hoschtettler.jacques.moodtracker.controller.MainActivity.NAME_FILE_MEMORISATION;
 import static com.hoschtettler.jacques.moodtracker.model.MoodList.NUMBER_MOOD;
-import static com.hoschtettler.jacques.moodtracker.model.Tools.Memorisation.PREFERENCES_KEY_STAT;
 
 @TargetApi(19)
 public class WeekHistory extends AppCompatActivity implements View.OnClickListener {

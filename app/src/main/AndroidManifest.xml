@@ -23,8 +23,7 @@
         <activity
             android:name=".controller.Statistics"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_statistics"
-            android:theme="@style/FullscreenTheme" />
+            android:label="@string/title_activity_statistics" />
     </application>
 
 </manifest>
