@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity
                         // Only if the sound is on
                         if (mSoundEnabled) {
                             // Choice of the sound correlate with the downside change of mood
-                            mResId = mMoodsPossible.getMoodSoundDowm(mCurrentPosition);
+                            mResId = mMoodsPossible.getMoodSoundDown(mCurrentPosition);
                         }
                         // Realization of the downside change of slide
                         --mCurrentPosition;
