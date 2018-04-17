@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transparent">#00000000</color>
+    <color name="textColor">#ff000000</color>
     <!-- Background colors used for the different moods -->
     <color name="faded_red">#ffde3c50</color>            <!-- very sad -->
     <color name="warm_grey">#ff9b9b9b</color>            <!--  disappointed -->
