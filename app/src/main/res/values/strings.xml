@@ -26,6 +26,9 @@
     <string name="AddComment">Adding a comment</string>
     <string name="MoodHistory">To the history of moods</string>
     <string name="Statistics">Statistiques</string>
+    <string name="PieChart">Button to choose pie chart</string>
+    <string name="BarChart">Button to choose bar chart</string>
+    <string name="CircularSketch">Circular sketch</string>
 
     <string name="title_activity_statistics">Statistics</string>
     <string name="AllDays">Nombre total de jours :</string>
