@@ -323,9 +323,9 @@ public class MainActivity extends AppCompatActivity
      */
     private void soundButtonEnabled(boolean soundEnabled) {
         if (soundEnabled) {
-            mSoundOn.setImageResource(R.mipmap.no_sound);
-        } else {
             mSoundOn.setImageResource(R.mipmap.sound);
+        } else {
+            mSoundOn.setImageResource(R.mipmap.no_sound);
         }
     }
 
