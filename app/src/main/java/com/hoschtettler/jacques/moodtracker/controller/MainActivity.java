@@ -86,11 +86,9 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < NUMBER_MOOD; ++i) {
             mMoodScreen.add((ImageView) findViewById(mMoodsPossible.getMoodId(i)));
         }
-
         mAdd_Comment = findViewById(R.id.Add_comment);
         mHistory = findViewById(R.id.Show_mood_week);
         mSoundOn = findViewById(R.id.Sound);
-
         mValidateComment = findViewById(R.id.Add_comment_validate_btn);
         mEraseComment = findViewById(R.id.Add_comment_erase_btn);
         mComment = findViewById(R.id.Add_comment_view);
@@ -222,50 +220,24 @@ public class MainActivity extends AppCompatActivity
         switch (buttonIndex)
         {
             case 0:
-                // Activation of the comment window
-                mComment.bringToFront();
-                mComment.setVisibility(View.VISIBLE);
-                mComment_Complement.bringToFront();
-                mComment_Complement.setVisibility(View.VISIBLE);
-                mValidateComment.bringToFront();
-                mValidateComment.setVisibility(View.VISIBLE);
-                mEraseComment.bringToFront();
-                mEraseComment.setVisibility(View.VISIBLE);
-
-                // Avoid a another try of writing a another comment or to go to history
-                mAdd_Comment.setEnabled(false);
-                mHistory.setEnabled(false) ;
-
-                // Avoid to erase or to validate a previous comment
-                mComment.setEnabled(true);
-                mEraseComment.setEnabled(true);
-                mValidateComment.setEnabled(true);
+                OpenAddComment();
 
                 // Loading the previous comment, if it exists, and displaying it
                 String tempString = mCurrentMood.getMoodComment();
                 mComment.setText(tempString);
 
                 // Plugging the listener of the comment window
-                mComment.addTextChangedListener(new TextWatcher()
-                {
+                mComment.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
                   @Override
-                  public void beforeTextChanged(CharSequence s, int start, int count,
-                                                int after)
-                  {
+                  public void onTextChanged(CharSequence s, int start, int before, int count) {
                   }
-
                   @Override
-                  public void onTextChanged(CharSequence s, int start, int before,
-                                            int count)
-                  {
+                  public void afterTextChanged(Editable s) {
                   }
-
-                  @Override
-                  public void afterTextChanged(Editable s)
-                  {
-                  }
-                }
-                );
+                });
             break;
 
             case 1 :
@@ -288,7 +260,7 @@ public class MainActivity extends AppCompatActivity
             break ;
 
             case 4:
-                // Putting off the sound
+                // Managing the sound : the sound on becomes off, the sound off becomes on.
                 mSoundEnabled = !mSoundEnabled;
                 soundButtonEnabled(mSoundEnabled);
                 mMemo.setSoundStatus(mSoundEnabled);
@@ -297,8 +269,32 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Ending the comment managing
-     *
+     * Beginning of the comment management :
+     * putting the display and the buttons visible, enabled the buttons, …
+     */
+    private void OpenAddComment() {
+        // Activation of the comment window
+        mComment.bringToFront();
+        mComment.setVisibility(View.VISIBLE);
+        mComment_Complement.bringToFront();
+        mComment_Complement.setVisibility(View.VISIBLE);
+        mValidateComment.bringToFront();
+        mValidateComment.setVisibility(View.VISIBLE);
+        mEraseComment.bringToFront();
+        mEraseComment.setVisibility(View.VISIBLE);
+
+        // Avoid a another try of writing a another comment or to go to history
+        mAdd_Comment.setEnabled(false);
+        mHistory.setEnabled(false);
+
+        // Avoid to erase or to validate a previous comment
+        mComment.setEnabled(true);
+        mEraseComment.setEnabled(true);
+        mValidateComment.setEnabled(true);
+    }
+
+    /**
+     * Ending the comment management
      * @param comment
      */
     private void closeAddComment(String comment) {
