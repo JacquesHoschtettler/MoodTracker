@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         switch (buttonIndex)
         {
             case 0:
-                OpenAddComment();
+                openAddComment();
 
                 // Loading the previous comment, if it exists, and displaying it
                 String tempString = mCurrentMood.getMoodComment();
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity
      * Beginning of the comment management :
      * putting the display and the buttons visible, enabled the buttons, …
      */
-    private void OpenAddComment() {
+    private void openAddComment() {
         // Activation of the comment window
         mComment.bringToFront();
         mComment.setVisibility(View.VISIBLE);
