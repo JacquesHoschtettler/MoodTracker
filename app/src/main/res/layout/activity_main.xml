@@ -104,23 +104,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="30dp"
-        android:src="@mipmap/sound"
         android:visibility="visible" />
-
-    <ImageButton
-        android:contentDescription="@string/SoundOff"
-        android:id="@+id/No_sound"
-        android:background="@color/transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
-        android:src="@mipmap/no_sound"
-        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/Add_comment_view"

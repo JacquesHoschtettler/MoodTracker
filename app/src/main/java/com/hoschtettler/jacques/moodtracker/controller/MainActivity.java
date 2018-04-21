@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<ImageView> mMoodScreen;  // Views of the moods
     private ImageButton mAdd_Comment;  // access to writing a comment.
     private ImageButton mHistory;      // access to moods of the seven last days.
-    private ImageButton mSoundOn;      // to put the sound on
-    private ImageButton mSoundOff;     // to put the sound off
 
     private EditText mComment;          // windows where the comment is writing
     private Button mValidateComment;   // valide the writed commment
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     private int mCurrentPosition;
 
     // Variables for the managing of sound
+    private ImageButton mSoundOn;
     private SoundPool mSound;
     private int mSoundId, mResId;
     private boolean mSoundEnabled;
@@ -91,20 +90,18 @@ public class MainActivity extends AppCompatActivity
         mAdd_Comment = findViewById(R.id.Add_comment);
         mHistory = findViewById(R.id.Show_mood_week);
         mSoundOn = findViewById(R.id.Sound);
-        mSoundOff = findViewById(R.id.No_sound);
 
         mValidateComment = findViewById(R.id.Add_comment_validate_btn);
         mEraseComment = findViewById(R.id.Add_comment_erase_btn);
         mComment = findViewById(R.id.Add_comment_view);
         mComment_Complement = findViewById(R.id.Add_comment_complement);
 
-        // Set the interactives objects on listening position
+        // Set the interactive objects on listening position
         mAdd_Comment.setOnClickListener(this);
         mHistory.setOnClickListener(this);
         mValidateComment.setOnClickListener(this);
         mEraseComment.setOnClickListener(this);
         mSoundOn.setOnClickListener(this);
-        mSoundOff.setOnClickListener(this);
 
         // Initialization of the data for the slide management
         mYWhenDown = 0.0f;
@@ -116,7 +113,6 @@ public class MainActivity extends AppCompatActivity
         mEraseComment.setTag(2);
         mHistory.setTag(3);
         mSoundOn.setTag(4);
-        mSoundOff.setTag(5);
 
         // Plugging to the memory space
         SharedPreferences moodsMemorized =
@@ -150,7 +146,6 @@ public class MainActivity extends AppCompatActivity
         mAdd_Comment.bringToFront();
         mHistory.bringToFront();
         mSoundOn.bringToFront();
-        mSoundOff.bringToFront();
 
         // Preparing the view
         mMemo.setMemorisationCurrentIndex(mCurrentPosition);
@@ -291,17 +286,12 @@ public class MainActivity extends AppCompatActivity
                         WeekHistory.class);
                 startActivity(historyActivity);
             break ;
+
             case 4:
                 // Putting off the sound
-                mSoundEnabled = false;
-                soundButtonEnabled(false);
-                mMemo.setSoundStatus(false);
-                break;
-            case 5:
-                //Putting on the sound
-                mSoundEnabled = true;
-                soundButtonEnabled(true);
-                mMemo.setSoundStatus(true);
+                mSoundEnabled = !mSoundEnabled;
+                soundButtonEnabled(mSoundEnabled);
+                mMemo.setSoundStatus(mSoundEnabled);
                 break;
         }
     }
@@ -337,15 +327,9 @@ public class MainActivity extends AppCompatActivity
      */
     private void soundButtonEnabled(boolean soundEnabled) {
         if (soundEnabled) {
-            mSoundOn.setVisibility(View.VISIBLE);
-            mSoundOn.setEnabled(true);
-            mSoundOff.setVisibility(View.INVISIBLE);
-            mSoundOff.setEnabled(false);
+            mSoundOn.setImageResource(R.mipmap.no_sound);
         } else {
-            mSoundOn.setVisibility(View.INVISIBLE);
-            mSoundOn.setEnabled(false);
-            mSoundOff.setVisibility(View.VISIBLE);
-            mSoundOff.setEnabled(true);
+            mSoundOn.setImageResource(R.mipmap.sound);
         }
     }
 
